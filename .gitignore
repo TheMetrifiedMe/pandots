@@ -1,0 +1,5 @@
+# ignore ALL files in ANY directory named temp
+r_project/data/
+r_project/plots/
+r_project/shinyapp/.Rhistory
+.Rproj.user
