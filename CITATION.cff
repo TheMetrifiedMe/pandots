@@ -1,0 +1,46 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Analysis of Pandemic Document Types (PanDots)
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Alexander
+    family-names: Schniedermann
+    email: schniedermann@dzhw.eu
+    affiliation: >-
+      German Centre for Higher Education Research and
+      Science Studies
+    orcid: 'https://orcid.org/0000-0003-2132-7419'
+  - given-names: Arno
+    family-names: Simons
+    email: arno.simons@tu-berlin.de
+    affiliation: Technische Universität Berlin
+    orcid: 'https://orcid.org/0000-0003-0657-5254'
+repository-code: 'https://github.com/TheMetrifiedMe/pandots'
+url: 'https://themetrifiedme.github.io/pandots/'
+abstract: >-
+  Types and genres of scientific literature serve different
+  social and epistemic functions within the scholarly
+  discourse. For example, medical researchers used preprints
+  or the newly introduced rapid reviews to swiftly response
+  to the Covid-19 pandemic. Such relationships allow to
+  understand broader patterns and trends in science by
+  studying the frequencies and dynamics of the different
+  genres. With this data dashboard, we investigate the
+  dynamics of <5 million medical studies that were published
+  during the Covid-19 pandemic. Further, we ask what genres
+  were used as evidence-base for Covid-19 related research.
+keywords:
+  - Covid-19
+  - bibliometrics
+  - medical research
+  - scholarly communication
+  - pandemic response
+  - preprints
+license: CC-BY-4.0
+version: v.1.5.2
+date-released: '2024-12-10'

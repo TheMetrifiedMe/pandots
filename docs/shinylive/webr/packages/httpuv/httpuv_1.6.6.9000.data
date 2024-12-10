@@ -1,878 +1,0 @@
-Package: httpuv
-Type: Package
-Title: httpuv shim for webR
-Version: 1.6.6.9000
-Authors@R: c(
-    person("Joe", "Cheng", role = c("aut"), email = "joe@rstudio.com"),
-    person("Winston", "Chang", role = c("aut", "cre"), email = "winston@rstudio.com"),
-    person(family = "Posit Software, PBC", role = "cph"),
-    person("Hector", "Corrada Bravo", role = "ctb"),
-    person("Jeroen", "Ooms", role = "ctb"),
-    person("Andrzej", "Krzemienski", role = "cph", comment = "optional.hpp"),
-    person("George", "Stagg", role = "ctb", comment = "Package modification for webR shim")
-    )
-Copyright: RStudio, PBC; Joyent, Inc.; Nginx Inc.; Igor Sysoev; Niels
-        Provos; Internet Systems Consortium, Inc.; Alexander Chemeris;
-        Berkeley Software Design; Google Inc.; Sony Mobile
-        Communications AB; Alexander Peslyak; Free Software Foundation,
-        Inc.; X Consortium; Ben Noordhuis; StrongLoop, Inc.; SaÃºl
-        Ibarra CorretgÃ©; Bert Belder; Fedor Indutny; libuv project;
-        Refael Ackermann; Kenneth MacKay; Emergya; Diego PettenÃ²; xine
-        project, The Regents of the University of California, Dariusz
-        Dwornikowski
-Description: A shim for the httpuv package for webR. A real web server is not
-    created, instead the relevant callbacks are made available for use by webR
-    and a service worker.
-License: GPL (>= 2) | file LICENSE
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.2.3
-Imports: Rcpp (>= 1.0.7), utils, R6, promises, later (>= 0.8.0), webr
-Remotes: webr=github::r-wasm/webr/packages/webr
-LinkingTo: Rcpp, later
-Author: Joe Cheng [aut],
-  Winston Chang [aut, cre],
-  Posit Software, PBC [cph],
-  Hector Corrada Bravo [ctb],
-  Jeroen Ooms [ctb],
-  Andrzej Krzemienski [cph] (optional.hpp),
-  George Stagg [ctb] (Package modification for webR shim)
-Maintainer: Winston Chang <winston@rstudio.com>
-Built: R 4.4.1; wasm32-unknown-emscripten; 2024-06-25 18:37:50 UTC; unix
-encodeURI               URI encoding/decoding
-staticPath              Create a staticPath object
-staticPathOptions       Create options for static paths
-Copyright 2023 httpuv shim for webR contributors
-
-This httpuv shim for webR package is based on the httpuv package for R, provided under the terms of the GNU General Public License Version 2 (or later), reproduced below.
-
-                    GNU GENERAL PUBLIC LICENSE
-                       Version 2, June 1991
-
- Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- Everyone is permitted to copy and distribute verbatim copies
- of this license document, but changing it is not allowed.
-
-                            Preamble
-
-  The licenses for most software are designed to take away your
-freedom to share and change it.  By contrast, the GNU General Public
-License is intended to guarantee your freedom to share and change free
-software--to make sure the software is free for all its users.  This
-General Public License applies to most of the Free Software
-Foundation's software and to any other program whose authors commit to
-using it.  (Some other Free Software Foundation software is covered by
-the GNU Lesser General Public License instead.)  You can apply it to
-your programs, too.
-
-  When we speak of free software, we are referring to freedom, not
-price.  Our General Public Licenses are designed to make sure that you
-have the freedom to distribute copies of free software (and charge for
-this service if you wish), that you receive source code or can get it
-if you want it, that you can change the software or use pieces of it
-in new free programs; and that you know you can do these things.
-
-  To protect your rights, we need to make restrictions that forbid
-anyone to deny you these rights or to ask you to surrender the rights.
-These restrictions translate to certain responsibilities for you if you
-distribute copies of the software, or if you modify it.
-
-  For example, if you distribute copies of such a program, whether
-gratis or for a fee, you must give the recipients all the rights that
-you have.  You must make sure that they, too, receive or can get the
-source code.  And you must show them these terms so they know their
-rights.
-
-  We protect your rights with two steps: (1) copyright the software, and
-(2) offer you this license which gives you legal permission to copy,
-distribute and/or modify the software.
-
-  Also, for each author's protection and ours, we want to make certain
-that everyone understands that there is no warranty for this free
-software.  If the software is modified by someone else and passed on, we
-want its recipients to know that what they have is not the original, so
-that any problems introduced by others will not reflect on the original
-authors' reputations.
-
-  Finally, any free program is threatened constantly by software
-patents.  We wish to avoid the danger that redistributors of a free
-program will individually obtain patent licenses, in effect making the
-program proprietary.  To prevent this, we have made it clear that any
-patent must be licensed for everyone's free use or not licensed at all.
-
-  The precise terms and conditions for copying, distribution and
-modification follow.
-
-                    GNU GENERAL PUBLIC LICENSE
-   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-
-  0. This License applies to any program or other work which contains
-a notice placed by the copyright holder saying it may be distributed
-under the terms of this General Public License.  The "Program", below,
-refers to any such program or work, and a "work based on the Program"
-means either the Program or any derivative work under copyright law:
-that is to say, a work containing the Program or a portion of it,
-either verbatim or with modifications and/or translated into another
-language.  (Hereinafter, translation is included without limitation in
-the term "modification".)  Each licensee is addressed as "you".
-
-Activities other than copying, distribution and modification are not
-covered by this License; they are outside its scope.  The act of
-running the Program is not restricted, and the output from the Program
-is covered only if its contents constitute a work based on the
-Program (independent of having been made by running the Program).
-Whether that is true depends on what the Program does.
-
-  1. You may copy and distribute verbatim copies of the Program's
-source code as you receive it, in any medium, provided that you
-conspicuously and appropriately publish on each copy an appropriate
-copyright notice and disclaimer of warranty; keep intact all the
-notices that refer to this License and to the absence of any warranty;
-and give any other recipients of the Program a copy of this License
-along with the Program.
-
-You may charge a fee for the physical act of transferring a copy, and
-you may at your option offer warranty protection in exchange for a fee.
-
-  2. You may modify your copy or copies of the Program or any portion
-of it, thus forming a work based on the Program, and copy and
-distribute such modifications or work under the terms of Section 1
-above, provided that you also meet all of these conditions:
-
-    a) You must cause the modified files to carry prominent notices
-    stating that you changed the files and the date of any change.
-
-    b) You must cause any work that you distribute or publish, that in
-    whole or in part contains or is derived from the Program or any
-    part thereof, to be licensed as a whole at no charge to all third
-    parties under the terms of this License.
-
-    c) If the modified program normally reads commands interactively
-    when run, you must cause it, when started running for such
-    interactive use in the most ordinary way, to print or display an
-    announcement including an appropriate copyright notice and a
-    notice that there is no warranty (or else, saying that you provide
-    a warranty) and that users may redistribute the program under
-    these conditions, and telling the user how to view a copy of this
-    License.  (Exception: if the Program itself is interactive but
-    does not normally print such an announcement, your work based on
-    the Program is not required to print an announcement.)
-
-These requirements apply to the modified work as a whole.  If
-identifiable sections of that work are not derived from the Program,
-and can be reasonably considered independent and separate works in
-themselves, then this License, and its terms, do not apply to those
-sections when you distribute them as separate works.  But when you
-distribute the same sections as part of a whole which is a work based
-on the Program, the distribution of the whole must be on the terms of
-this License, whose permissions for other licensees extend to the
-entire whole, and thus to each and every part regardless of who wrote it.
-
-Thus, it is not the intent of this section to claim rights or contest
-your rights to work written entirely by you; rather, the intent is to
-exercise the right to control the distribution of derivative or
-collective works based on the Program.
-
-In addition, mere aggregation of another work not based on the Program
-with the Program (or with a work based on the Program) on a volume of
-a storage or distribution medium does not bring the other work under
-the scope of this License.
-
-  3. You may copy and distribute the Program (or a work based on it,
-under Section 2) in object code or executable form under the terms of
-Sections 1 and 2 above provided that you also do one of the following:
-
-    a) Accompany it with the complete corresponding machine-readable
-    source code, which must be distributed under the terms of Sections
-    1 and 2 above on a medium customarily used for software interchange; or,
-
-    b) Accompany it with a written offer, valid for at least three
-    years, to give any third party, for a charge no more than your
-    cost of physically performing source distribution, a complete
-    machine-readable copy of the corresponding source code, to be
-    distributed under the terms of Sections 1 and 2 above on a medium
-    customarily used for software interchange; or,
-
-    c) Accompany it with the information you received as to the offer
-    to distribute corresponding source code.  (This alternative is
-    allowed only for noncommercial distribution and only if you
-    received the program in object code or executable form with such
-    an offer, in accord with Subsection b above.)
-
-The source code for a work means the preferred form of the work for
-making modifications to it.  For an executable work, complete source
-code means all the source code for all modules it contains, plus any
-associated interface definition files, plus the scripts used to
-control compilation and installation of the executable.  However, as a
-special exception, the source code distributed need not include
-anything that is normally distributed (in either source or binary
-form) with the major components (compiler, kernel, and so on) of the
-operating system on which the executable runs, unless that component
-itself accompanies the executable.
-
-If distribution of executable or object code is made by offering
-access to copy from a designated place, then offering equivalent
-access to copy the source code from the same place counts as
-distribution of the source code, even though third parties are not
-compelled to copy the source along with the object code.
-
-  4. You may not copy, modify, sublicense, or distribute the Program
-except as expressly provided under this License.  Any attempt
-otherwise to copy, modify, sublicense or distribute the Program is
-void, and will automatically terminate your rights under this License.
-However, parties who have received copies, or rights, from you under
-this License will not have their licenses terminated so long as such
-parties remain in full compliance.
-
-  5. You are not required to accept this License, since you have not
-signed it.  However, nothing else grants you permission to modify or
-distribute the Program or its derivative works.  These actions are
-prohibited by law if you do not accept this License.  Therefore, by
-modifying or distributing the Program (or any work based on the
-Program), you indicate your acceptance of this License to do so, and
-all its terms and conditions for copying, distributing or modifying
-the Program or works based on it.
-
-  6. Each time you redistribute the Program (or any work based on the
-Program), the recipient automatically receives a license from the
-original licensor to copy, distribute or modify the Program subject to
-these terms and conditions.  You may not impose any further
-restrictions on the recipients' exercise of the rights granted herein.
-You are not responsible for enforcing compliance by third parties to
-this License.
-
-  7. If, as a consequence of a court judgment or allegation of patent
-infringement or for any other reason (not limited to patent issues),
-conditions are imposed on you (whether by court order, agreement or
-otherwise) that contradict the conditions of this License, they do not
-excuse you from the conditions of this License.  If you cannot
-distribute so as to satisfy simultaneously your obligations under this
-License and any other pertinent obligations, then as a consequence you
-may not distribute the Program at all.  For example, if a patent
-license would not permit royalty-free redistribution of the Program by
-all those who receive copies directly or indirectly through you, then
-the only way you could satisfy both it and this License would be to
-refrain entirely from distribution of the Program.
-
-If any portion of this section is held invalid or unenforceable under
-any particular circumstance, the balance of the section is intended to
-apply and the section as a whole is intended to apply in other
-circumstances.
-
-It is not the purpose of this section to induce you to infringe any
-patents or other property right claims or to contest validity of any
-such claims; this section has the sole purpose of protecting the
-integrity of the free software distribution system, which is
-implemented by public license practices.  Many people have made
-generous contributions to the wide range of software distributed
-through that system in reliance on consistent application of that
-system; it is up to the author/donor to decide if he or she is willing
-to distribute software through any other system and a licensee cannot
-impose that choice.
-
-This section is intended to make thoroughly clear what is believed to
-be a consequence of the rest of this License.
-
-  8. If the distribution and/or use of the Program is restricted in
-certain countries either by patents or by copyrighted interfaces, the
-original copyright holder who places the Program under this License
-may add an explicit geographical distribution limitation excluding
-those countries, so that distribution is permitted only in or among
-countries not thus excluded.  In such case, this License incorporates
-the limitation as if written in the body of this License.
-
-  9. The Free Software Foundation may publish revised and/or new versions
-of the General Public License from time to time.  Such new versions will
-be similar in spirit to the present version, but may differ in detail to
-address new problems or concerns.
-
-Each version is given a distinguishing version number.  If the Program
-specifies a version number of this License which applies to it and "any
-later version", you have the option of following the terms and conditions
-either of that version or of any later version published by the Free
-Software Foundation.  If the Program does not specify a version number of
-this License, you may choose any version ever published by the Free Software
-Foundation.
-
-  10. If you wish to incorporate parts of the Program into other free
-programs whose distribution conditions are different, write to the author
-to ask for permission.  For software which is copyrighted by the Free
-Software Foundation, write to the Free Software Foundation; we sometimes
-make exceptions for this.  Our decision will be guided by the two goals
-of preserving the free status of all derivatives of our free software and
-of promoting the sharing and reuse of software generally.
-
-                            NO WARRANTY
-
-  11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
-FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN
-OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
-PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED
-OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS
-TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE
-PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING,
-REPAIR OR CORRECTION.
-
-  12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES,
-INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING
-OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED
-TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY
-YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER
-PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGES.
-
-                     END OF TERMS AND CONDITIONS
-
-            How to Apply These Terms to Your New Programs
-
-  If you develop a new program, and you want it to be of the greatest
-possible use to the public, the best way to achieve this is to make it
-free software which everyone can redistribute and change under these terms.
-
-  To do so, attach the following notices to the program.  It is safest
-to attach them to the start of each source file to most effectively
-convey the exclusion of warranty; and each file should have at least
-the "copyright" line and a pointer to where the full notice is found.
-
-    <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) <year>  <name of author>
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
-Also add information on how to contact you by electronic and paper mail.
-
-If the program is interactive, make it output a short notice like this
-when it starts in an interactive mode:
-
-    Gnomovision version 69, Copyright (C) year name of author
-    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
-    This is free software, and you are welcome to redistribute it
-    under certain conditions; type `show c' for details.
-
-The hypothetical commands `show w' and `show c' should show the appropriate
-parts of the General Public License.  Of course, the commands you use may
-be called something other than `show w' and `show c'; they could even be
-mouse-clicks or menu items--whatever suits your program.
-
-You should also get your employer (if you work as a programmer) or your
-school, if any, to sign a "copyright disclaimer" for the program, if
-necessary.  Here is a sample; alter the names:
-
-  Yoyodyne, Inc., hereby disclaims all copyright interest in the program
-  `Gnomovision' (which makes passes at compilers) written by James Hacker.
-
-  <signature of Ty Coon>, 1 April 1989
-  Ty Coon, President of Vice
-
-This General Public License does not permit incorporating your program into
-proprietary programs.  If your program is a subroutine library, you may
-consider it more useful to permit linking proprietary applications with the
-library.  If this is what you want to do, use the GNU Lesser General
-Public License instead of this License.‹      •RËNÃ04%I¡P8Àÿ åÊU! ÒJ\M²-F®Å†Ò(ÛÆ‰“>@(rvwv2{óT'„lÏÃ·)ñû½Îé9VM,\»¸<|BŒ; #C¿{İêÆÛjxï ÔĞ†=0óâÀŞ'†+©g½ª~Xè[ ÈÅm]w"Ù[’]Ğ$kc•wˆ»Òùş\ÏbÈÛ<ºC™Œ©Æˆ†Ø¢¢dì¸3@u~¨z~…ÈXÆ‰e¨Ì%¨Ôri‚äÿØnÎ«?®n¿ Új”(	2wÎW¦€£fêKsÈğÚúyÀG$ŞbxtªÔÊ•OD~‰«x…G.¤’‰åï¼Z‰çK6‚üºz. Ïïç½I’ç~›‚\ÊÊ²u!8Ó¨kÛm%#HLQßÀd¬ÒX/š‰Ózá$õ˜Ö¤3Uz˜ªq+÷ß˜â_ÓéôÃ÷å7Í  ‹      ‹àb```f`a’¬@&khˆ›®“0ÃÄ`š…H«¥¥¤™%ZèšYš'êš$%šë&Y¤¦é&¤X¥™30°0!éaÍKÌM-F3ˆ;3¯$µ(/1§ØÓÈı HiÜ
-‡   ‹      µTÛN1-È%1A‰ûÆxyğÕà%D¢D!ñµìP]Ú[P–)»ÅÅèCwÎLO;Óé>•cY–Ëá7å[ÍëÃs[80êTĞî#*¡]ë†+{ì›9¶àÄ‚SÎ”@¹ÚƒÖCE_wê0Ÿürh„‘nC˜.E6âÈ}`¤V!Mlã.<ÚOªÎ‘S@“»7`¸PÑbNq?‘h¯Úa€ïÏuû\CŒbèiVş¬ûÄå’Ã8é–Òa9gr·Ìz²‡f‡3Uæ(E¤(Ñƒ:c2W‰¸y”é"Â}°n]¶ËÚ%¡ÜfÏ×”ÆH×tEz#Q_ï|Wıæ,PÕ½@+PVÚRÔ-Iê,0OMqğîúSË¿”%`ñ-¼¦ß¾äÕ½¨2ãD£_NwÆ‰~‘şY+ß…/E¸ ÷¬-bíŠ¢TúJøó7ñ}1™”ÅnáãM÷½4å°/ò°´yªZ¹˜¥y>Ú‰¾x¶  ‹      ‹àb```f`a’¬@&khˆ›®“ ÃÁÀÂÀ	¤ôôô(£¤¤ ´Håæè§æ%ç§¤†yê¸¬NS]N~ºOjYj²2ELeÅ%‰%™É‰%d)ÔÀ§Ğ¿ $3?¯¢…	¨ª5/17µÈ@eN¸ß BpçüÜ‚ü¼Ô¼˜Ò”T4¥pt¥°€ò¹„Š¦V$ç”¦¤cH`ø(ø ô¸^Û3  ‹      TMOÂ@]JËg4(¿ÀƒG¹hˆ'’`<ø‘‚Ñ›YÚQVÛİfwøçÁÁnK©…&Óé¼}ovwfÒ—!¤Llß~çiØ?»$ÄjcĞD[ú†ñZ­DlR_Æn·€Tİn/ Jm8Õ ·ÿVTeÌ_¹˜nÑÔ")B¦@ğÊi§Ó99İGuµ«ªúÆ8‚¯e¦:fi×÷“Ùz|‹ÆÂèWéaBƒ×4MËÀõg„÷	:|ğ„Oî­3 'ÂHpàxšEêÌ¼ öa ©fŞ#Õc³Ğ|íŞß,qHÓ2“#ã(×XÔ§!Ã¤Ó¡¸¦
-º©k r‚g®«0b^š³©4•zÑPÅ³­‡H3ÁÕŠ*"#NÊGLåó¾µÙ[k39Ö:Š'Ø"+‡:œ†¿¼|æ«ôV¾k•7!Cª7FN$ßìvã¿©Xö>ûûµ"”}¢;0ól›'´ÒÂ”§™6˜á„I­²ñåÃÃ$ÄÓâ(e·:H4??:(€w ÇÂÏÀD_`&à:³c¶«ú_<`£ìL8WÄšñ,i}pš„xÙoîf€4×  ‹      ÍVÍn7–ùOEÑ)Pä6PÂdEV'µâ ¶l§JGœ6@PÔŠ^1Ú%$W¶‚ú:¹öØkŞ¤ç}ƒ¶CîRÒ.ì$Í©6VË™!?Î?î‹J¡P¸V(—ñw	‡…¥ç§G›÷PºÂj¡Púß_Ê…5|/´âI*­t‰7&>MÅ¯#¨áLH8§ƒ^j«lÕ·ñÿûF£‘hŠzëÀ¿ˆJ%øzõ± ÕTÛ#Ê}HPØo½Jb]İ¨	PS}-èC©t<d¢î‰mœŸWZğ‹\‚…OÒäy²æ=°g$dÁÔÌí
-Å4ôÅ™>'’Ö »ßoQõ¢QŞ¡¨§…´ş)ÉÀ¾$±¸Hò‹S)¨â™Õûçîñ¡|C_›ÉOp2ÊÕ˜åœªR®BDš	N‚ú(Šòh¨¾-E_ßÏmIË¡²3æ:+¼mƒê†ÅŞ(~55ÿ«×·	¶YkÁc1E¤t¸WoÁ‰ÏøE:îøˆÒŸ*A'h`4PĞ•b"T«ÒášJNµ1k*h®„Ô,Ò^@/R	ØM!•Lµ`ŸÊ1ètV¹ÊUÌç-x$„&Kû‚Oá©0Ô´1Ò˜§q)ØÛ_DîRLÉ¸U9’”Î@áHÄ|h8g^,8hÜàp"„bôªÒ×RpÿXˆÈMï“w¿Ğl0Cµÿî­õ_ãO€{·àˆ1?>Œ5Ÿ¶*à±‹¤x­Ö‚=#4€=oLeH8†ø„rÌØï	™¶à“âOIõÆ¢5åï~kU.§¨§#Š`>ÖH8âsÎ&Ø(LO¦M†õæŒÔ*D²X½ƒs£‹sìÁôğ¿İ›s‚Iy"JÛÇuLö@R•¸0\hÛDxh‰¦Ã˜ÃJÉĞBI¬é„`;z$¨À”!$C
-d‚Ç›‚d‡XQLíFËÄnÃ<
-è4f«:|ãQ÷ÖìBs~3ÓÇöáIÿ0’d"”µŒ.İ­7ë·Rá~Ï‹"‹³UoÔïâA‹5T­ÒÛ®U0Ë!S¥ Ã’vZ£~¯ŞÀiè¤L1¾3ã]ŸéQ<ØÙ‘›çD…7îfš>usaögfÇXÄTõ+XV…—H?›Ór$X‚´êšI¯µ]ÂoğÄ.ƒ‘¡U¬5!-0Œ5W¦ìÔ”àÁú"YJ¸,ñ$°şa’ÙH#ı6ÖıKXıA:u¯·ë·ë[-0ù¼ÕÜŒù˜‹s¾‰„âIáqhA³Ñ¼½ÙØŞlŞ­{;·îîÜiÀóSä-$…,{	Š®îœ„Tá`ñ¶ÌİåÓi4ë“S¦'¬üh”à©¸¶ë‘ê¡»<×Ú"šJæ´+3r—us¾håÛ˜+¹zÈ=L÷|LŞLˆ&³FS<Ù'BÏ¼è„Ò”rb†htâÚ1ãcÄ;îS ñÒİïO	ãŸYß-íÇ,Ğ8ø¿!Ì·D9ı¦(âó¹ıè°:ûóéô¢\:¯¥Ê/{¯”åüW“L¾¾HOB^ÍcÃıŞLm]±ˆn›WV?7ñ›+z!7­<ïŒâ?©­œÚŠ®š«]<ØÀ¡[„eq5X~Ö×¦IWİc²V˜¿m6—Ó÷µ¼†rºÒƒİKr_LQW‡KÎáÒ§¤5²+XÙ
-çƒˆ\ce–œ[‹/YÌ¡3¨W/.õ¶?qåªãä\ŸÏıRÂ»“|ó·š¼şoÉ/ÛûäƒÈØ—3İ—)â¼(ù$g’–Ù{æ[é*“.ÿ¤*»*ı§ K—èÊŸ¼:£éÃ~»×évdY1MEoH#Ê‡3urÓUë c_íÇ>^øsŠÎ2öEg›Êw=mª…Û£iÜÿmª÷  # Generated by roxygen2: do not edit by hand
-
-S3method(format,staticPath)
-S3method(format,staticPathOptions)
-S3method(print,staticPath)
-S3method(print,staticPathOptions)
-export(WebSocket)
-export(decodeURI)
-export(decodeURIComponent)
-export(encodeURI)
-export(encodeURIComponent)
-export(excludeStaticPath)
-export(getRNGState)
-export(interrupt)
-export(ipFamily)
-export(rawToBase64)
-export(runServer)
-export(service)
-export(startServer)
-export(staticPath)
-export(staticPathOptions)
-export(stopServer)
-importFrom(R6,R6Class)
-importFrom(later,later)
-importFrom(later,run_now)
-importFrom(promises,"%...!%")
-importFrom(promises,"%...>%")
-importFrom(promises,finally)
-importFrom(promises,is.promise)
-importFrom(promises,promise)
-importFrom(promises,then)
-importFrom(webr,eval_js)
-useDynLib(httpuv)
-#  File share/R/nspackloader.R
-#  Part of the R package, https://www.R-project.org
-#
-#  Copyright (C) 1995-2012 The R Core Team
-#
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  A copy of the GNU General Public License is available at
-#  https://www.r-project.org/Licenses/
-
-local({
-    info <- loadingNamespaceInfo()
-    pkg <- info$pkgname
-    ns <- .getNamespace(as.name(pkg))
-    if (is.null(ns))
-        stop("cannot find namespace environment for ", pkg, domain = NA);
-    dbbase <- file.path(info$libname, pkg, "R", pkg)
-    lazyLoad(dbbase, ns, filter = function(n) n != ".__NAMESPACE__.")
-})
-   Æxœ‹àb```f`a’¬@&khˆ›®“0ˆ¥€…	H02°0p‚ÄósS‹ˆ$Ã? ş¥¹À
-! ‰2€ñ?T+Ô ¤Ì¼”Ì¼ôb(Ÿ-5/9'ÆãJ,))ÊL*-I…‰°d›ÀÔæä'g§¦€l ­=¨  	xœ‹àb```f`a’¬@&khˆ›®“0ˆ¥€…	H02°0p‚ÄósS‹ˆ$Ã? şUÌ‡)æÏI¬ªLI,I´Ê())(-ƒ˜ÅøMÈL¨Q\PcPÙ(úX¡ú8’2óR2óÒ‹¡|¶Ô¼äœ|+±¤¤(3©´$&Â’YlS›“Ÿœš² Âc ó  TxœµTAOÛ06!!P4iÒ~ÁÓaãÀeÜÛNB»TNíP3ÇIm7iø×œ¸±9ÅNI“ô6GÏöó{ßûŸí<  ‡Àuuïé)ğ~Mï¾}ÀùR)fôõølšëèî ¸à¤bšèá“»–7#¯fÍºßÜŒLĞS-ƒu#ëéÃŸI¹Ãçq”½º}+ÒF!EÄ{Ã¿;8kl¡|±â3=¸­¹…<:‚àëY°¶vãn÷ân»p~L9b¬ìË´6·*ƒL¤	•¤Üğh3ïûıHW-ï[›äˆÍd[m®—S9B:›÷¹3›W C96ÿIw‰½Ïäbg“¿a&h®S„90N&BÂb—ùìüú*†åúŠ-‹ü).d/“sİ9œÂ±J²’İO'Æ”‘ë0EÃáã.”ÊV¹©¶cùÍª¹Ã Ôßm§¶Öß­^¥=Š\gESŞq¾q9™\$D-Rlkáã’3Õ*Yg©PµJ“ê1CÏ%F
-Yò©…ËŒÌMQ_Ìhÿ0 9odæÙØå˜òG¹=ˆ9K­6@J	­Ôö©œ\Z_–Îÿ\±ş~ŸÈb   1xœ‹àb```f`a’¬@&khˆ›®ñX84[j^™••! \È   Æxœ‹àb```f`a’¬@&khˆ›®“0ˆ¥€…	H02°0p‚ÄósS‹ˆ$Ã? ş¥¹À
-! ‰2€ñ?T+Ô ¤Ì¼”Ì¼ôb(Ÿ-5/9'ÆãJ,))ÊL*-I…‰°d›ÀÔæä'g§¦€l ­=¨   1xœ‹àb```f`a’¬@&khˆ›®ñX84[j^™••	 \Ë   îxœ‹àb```f`a’¬@&khˆ›®“0ˆ¥€…	H02°0p‚ÄósS‹ˆ$Ã? ş	e3A±e”””–Ay\†zf@hi`` UÏ6Ø ‹ÿCÍf…êæHÊÌKÉÌK/†™š—œ“ãq%–”e&•–¤ÂDX2‹ƒM`jsò“³SS@¶ 7kw   1xœ‹àb```f`a’¬@&khˆ›®ñX84[j^™••) \Ì   -xœ‹àb```f`a’¬@&khˆ›®! ÄŒ,œ@š-£¤¤ ´ Aa  oxœ­XmoãDŞ8Nš¦ô*õ€£%åzéJ)¨´wHpˆª=Nõƒå$ÛÖœc[¶Z¸Í7„NŠÙwãÙõØI€JI¶³3³³ÏÌÎÌîÏMBH•˜&û®±!©½øéÛ½/1Öù?â·A³Ê~ÿ"é_…˜d‘ıÖ©7<:úœÓ ÔÊ-ûzÍ>#Î'ş`_†F4œ+ŒúêFİ>A¨u—z×ñ2Sóì>Ò	#2Æ…¤xn¢¤j{w˜-'À–†®ˆÓ× 7€Eª	¶ŸÆƒĞ3Íñ®AÎUÆ´y|dú_£ÔM
-½Ûá5-&¤:ZjbV/8QÛ¸n:µ`lKBd¹éºk{8uÆÕÀëÆ/À1%ä¯I!¬¨±KÌXU•‘eïa
-@Nè{}êÅy+Ú.å#õ3‡Óï††NŒøm5t\§ku¯—9OaYBghÇòŒ4Fà‡±İq©\
-Ïb×õ=šgÂ"e]¥ğŠ°³Oã¿!ÈVvRâ†½DLNíªÜ[Nï{‰ªnsuu›EÆkÙB´È@{§lÿËÔcğEV`‡“ÈÁÈdÊ™ù3ü}ñ{o–Í­Eƒ€†–0$Õ›;Ìı­=R\_—fóÕ|rcG7ÏV…±ÂQp~ ´?H4³´ÄwJèî$3®
-@~˜Ÿ¶ğ°¬LÅ¶–0'£–ÛÖ—3#ê^ezï¬¡‹íŒ¸*Ş.sw™â¸d¢Šª•÷1»Öì(r®=‹gS^¤òn—˜¸	ô}¬ÑÊä¶¹­ä2w‹<jeùTn«ì(.ñÂ˜‰ HAÏ}ÆÒaŸ Ö•¦Ë7Ò#Åá Íœ ß)O{òHÁ:2²¤wAÔ¾ûo§6^H”Ìm¹¡š™Cj¹OYbi7öC$•·¡ğHO‰³}d—mÈ7ÒÆSâ¯LßĞ§Œ¢şgÑu¢xŸ¶ŸmJÉ²µq×!Ğğ)Ø8Hò<Ób+ih{Z½òCÍÓ&ï³3Ö@¡º7ûöKúÕ¸Ş~ÍâÅñ®S¦CŒÙ¸¼T}p–x¨c<Od/±V}˜şsnÓ2¹ËRĞ	ĞMá9é=îé®èœ¡cWÚÛié¢Æ³0ÖTÕ‡ ³6„Ø[Â®ítmÑÆ“>õäO"ÿ¦$=pi’7oÇHŒÉ›A)Ì•KÕôãÿÃc@;IŠz,Çs"óD·|†í?Õì(„r¦kÄF	
-ĞR™6æ°4sT7#Rvƒ`]ƒÈ˜–u^iÇ¥fÂ	£Ñ½‡å×¹‚CæMÙXÊæsĞv}»b<Îˆ¹†Iè<ıEµ¡œß©¦¸Ú·o…Še’v¼›%Ké*—Çİ³û–¸§O¹¼aAq v” M¶ò¹$CöŸ¤Ÿ¢Úmh‚q1®$û›ò"ğ å‚[£”Ø˜5<²~Û4ÙyÑl’¿ÄW:d¦C\ãïĞJº»›QŸOéÎ¼ıñÆYÎH‚ÔtÃ†á¬e¸‹çcÌöóm?ÿ¶Ÿc¶Ok~Ì(öA‡Ï…_*-ğQKZıA·:´E˜]CZg/NO[~Øâ	²×Êæ’&Ö’o ìPåzŒF/ôËéİ"ÛiöËº‡˜öò É£ª>8]…~ÿÔæ=T.ÍX	/ôJhˆ59 YrX?ba*¼·İ¨Dòä%I>N˜9Ñó=Ö¯\_pÛáÛø[Ä!OëÅ¡lñöÛŸµ‘ô]¾¢…MóâĞêÚA4àos
-z§>"ê«	+r5x—c½y”¥,ş\"×µã8t:ƒx²MÓ‰~<˜<ëúİ—ãˆı"Q7  §ğxœí=[ŒÇq{{{o‘<™4MÚq´²Ä—©[>BÓ"CI¤Nâ#¦D…¤L)R´œİÛqwf53{Çc$6í¦¤0¶@ÈN±ıcI>üACÈOä#b$úàùÎ_¸ÍôL÷LMOõcv÷DÊºN7ìé©ª®ª®ª~Ö³…Ba¼P*ÿŸÏ_>½ğh¡PÜJşAÿî~×‚_RyŒşÎ‡K…R~ªÛ½âİ®é
-¥ñ ä
-Ñ«1iÚËÇŞAi©aš] ·@ñL‚:c¿ü¯ÈO,ĞRV²Å5;F·ºÔ³ëÕ —‡|4M^ú–cGïÒ”8µWÉ7ÿÇ•ßï´UÛ\!0«]Ãri¥LŠ`¼ ›lìh¯Fo¦@É>‚~ìº&Ø¢µ„”ÎY^%İ¸Ù¾X‰=§CZˆŠ-×±;¦ís ×êãKËA³z3ùZÕh;v3z9-¡wcÄŒÕ(²êF;z¹	«4ö0ÆÂ—^8ƒ¿ówÜ@ğÙv¢l7÷q¶ou¶õuĞº&aïDÍ5k öËÓ¼ÏüS‹™¶åù‡ùÆµ7DÂw˜‰P_"È©“]Ãt(Õ'ÍN×_Tÿ¢Ô2¼/Ñ½˜˜G
-'Û¦İô[?6“Z'_,°Ÿ5·gİ0yİî×)ˆM…È`}6Aü ¯<ÈMaS«¾Sµ{m¢µĞšæQı© ·SÁ«=}'
-&PµJÈyBæ¯ô£_òüé~ôKËıèÕ"…ÅÇ“0&–A!ùQ´ÿs¨‰uM¿çÚœFÓZ»aÓ´'ZÈ4PÊ«è5ŸÄ(,¸IùŞ>§3¦]o;ZÁA¯WóLŸõ¼D-Í6s Ğo©T«¬ĞQUõ›ªYv#Ä´Ÿ'cªëZË†oæ”òØƒHáæ@93.Cd
-c¦…êğÄóê°Ì5–<ßé"¼Ù°Å6÷î+wz_®™åÀg´ÍFyÉu:eÃ._<Zœ¿Y÷+r	Úˆ‰OŠ)¶ÌÏv´šˆ˜V« Ôª‰:neºë¸¾QkhùÄ´<¢á‚sëÒyŒ´ß^iYqƒ¡İWØ|‘`d‚qÔ•„¯ê²^õ)AÏ+É¸™2û5Ø 3ÛŠo­=BŸK¬\sø)ÎâfX©AAÙt´Jb˜‹ –2€(îŞ•oï€9Z&/$’Á^54Æx[°ÈåÑu¢êQÏ‚Ñ€ŞJ¶Ñ!mÊÄÂËF»G_èDx_ÏèóqÎœ©Ìöqú÷¨Ä„Aü»¡‚ p’Æ É•˜Æñ!,‡,E¼bÈ‚úŠMdø}¨‡.#q3Şrh¯(B¸­c\3«K–ëùá<ƒ×¶ê /ªo3„HV‘*İá¾\Ï²£;3ÂÌĞ•x¶!-6D¥œOôÎ,ÚaEË4d>¢«ñ“·x³Ñ›Jjƒ§Jmf0n¦ú˜Á÷DâsŸ¤íÙL•O:œä¹Lß?LËŸê'C¾ÌÔ›f ÌpğÑÃ±¨Â¡{Ÿ ö)ú%¦V%‰§@Ù“y´x=eÂÁ^ÔÁ±Ş2T˜šEM>ª,ÌÈiPÿ„4hÂUáØŸ_^ë’ƒÑ€Õ¯ÛåwTo×î“°¾–½}¬Â»†ÚHé~ğ¼ OÑg•æïeÚV‹ƒñzA­+£j¯y0(Å|:faTZ·ÿ6§eü€ÚÂ÷P¿ìë'ñK¦çHpnï§á±çÇÁ³nxXÕ¾8ì$Ê©çnW Õ‹s#„Zq®
-¡Vœ»%B'<‡@É›^i<? …µ&‡Ë+òú‡êÉ´©g¾V±â-ZVˆ!
-Ñ+¢UÜ{JáU1ıD'14½8ÃwV£¯òâK-qïŸÖ¤ñ4-;iĞŒ‰èœH}x-$…Úz’Ãè©ô[kvIÕG&sLñöAåÆãTİé®êºÏ“à9†ğ©d%=®Åëé©ªsÑp˜aãœŒ÷±}cC425ƒm(¶A©("Mºv»ÂÀašÎS¤™ahŠ%•jÕ¨ûÖ²)šUÄØñ¬ÀlùkiIRe‚ãš.¹¿9ˆjÅ£é@Å,TV¥NÓôr‰TÂ¥¹AÆñ*Ä52i5®Pa}cKi—eïJÊ/Ñ:—¹ÎšX—:-„ËQ¢%¼©´/†¯â	{ş…b¾YÀƒËXÛÆ^J¿ü²Ä©C \Ùy‰gMRK	›ì€4p*cÿå>×i§/{æ¹óçN“Õ~áà„’<Ã°QôùL'Ò²wÔ8ğ}hbâd÷"Œ—ûb¢“MUd<v*$øIñB€Û @öNwp<à TÄ„—É#uÕ¤‘Ş” ĞDn5¼
-Ùl _{ç‰ ]å¹~AË©:ï+ ì·è3Ö]_Œ}…v×— µ !®	®ÓØÈwyf5Qğ q×Óo9n'â$±˜èxÊ¦ã;À²Ó÷–W$•ğ­…ÄÙĞëj¿o‘`<5aÎv¹Õ$F†á÷Óç«£ û[ú¯#và*„/é;ñz–lij«S e’!fğxç/j›´IjÇ8›Çó0Qµ¶S¿&4£ZfÑtÑ|¢Œ¯Œ˜š¬h 4iõnY¤*±>ç½9»Â'%<ÂFÒç!¬µ4Şƒ' ÊFÿäÛí’o¥TîÚî/iÒ®¢¼‘Ñ9„.tVÀñÿ.ş{ÕŞAˆ8kà¤ÏyçƒşkR+~BÂ¦$ê'=şiŞÏŸ´Û` {·IŸSÖ%ú|FÜKòù> ”Ag7½dÙF;Új›' ºŸ}çVWØ¹V÷‚ŠmÒ–.¥¶ºÍ¦È„OÕÏŒ÷@£U6¹f³7:ÍÑfŸßjíØæu‹è…È	jZ{•LÏŒ@¦MPEJA!1Ñ4›T’‚AsQ°mio!]íU®›0¡^ëKÄ(Á÷í€ƒ:ôƒAq=€X}¬ç”˜ÈxŸÈİ™k˜µx¦n¢gÇÇZºĞÕCÌGtÉ‰”V2—ÙY°ÓŞn™®åsÅt7	81HÉO›‘5×4ıjB†{)¾şzRŠK3ãÊ%Ël7¼,|é×[Ø×Ñ8~ÎØc8ÉÁ–cA9Ò×—I"ºœ2ˆåJk•õ—déĞç×YÖuasõ°¤U*d·º ³a
-µ‚ØÕü…|#rL§©âz=ĞÏ_<ºH8~Æ´M×ğdcòAì»]W)ğ«ñÆ~£ÌÃªd‰ˆfƒO¸şÆëœh=%ğØ¥^­lØr8{j¥Ôñ[„\¶¾ì¸eÛ±Ø¿¢³Ë©®Yï¹™òë˜nSµcpÜ©½Z@6¨®´¬z« ½A•)ÆW9?ºŞ$!LHhuÙ¬‚†ş+§şUú—×Ü›‚!«’Ì[Æv{µ¶UOŒ!­øµ~–XT•3 (¶¯#ıˆa_í€·Ûšb(ÒX¤AöT¨³Ğ'¿ÀW™	«ĞíÏ¼À·×•(?ğï){V¼x'#ô÷1­“	xš„IêBD£Z‰gï¿!cŞ<YİJŸ­}˜†väˆù÷ ;znIz\ÖXP½\R÷™DÕ8†^¸›ß$Ã”¼x98oàÜ~¡Ğ4ñjñ÷&„«/lå¾[ÂŞèĞ‚v Wİ’ØB`ß"…MKŞ¶ÌÅjÚüyÿ· fA·Æ¨¾Êş+{SÀ=åêOÂEksâvßF°ßÎÛíÔ…2Ó<m;ÙDÚ[ ì
-x¾ß¯q81÷_<~œãK‰L{peáX0#í†‚´
-ÒşˆÖû&ıû-¤†÷¶ïíağ®Sˆ®}šâ¾ĞaW=ßíÕ±“óu×$n-ª›z¦0ÆLåah²Æø5á‘¢è(èô#ömPöí~–€âBTFpdğhÚCÑ¬·yN/+€ûÔ×œoÃzkÜ3ï†&<Ø!nHàİÖ„ı¶„¯;@{ØæŞ§°:_—ÔQÅ;@;Œ[<«Xœï6ÂCİÅ²Û}ñw¿|·~WL/ˆâßáş†Œì$ß³·a¿Éµ%æ[lTÂ‰•è”=ğæª-9`1Ã¤G";‘®Èdsƒk¿À˜Ñ—5=¸o)à¾´Ê Ã×+ÒA4*·lË·Ø6­õy‰”Í¿ô	¶$ğD—ß¡Ï¿‹´Ÿ½|¹;„<ïAÒŒnĞIš'£Ë lseï¾òŠå·Ê†Ûì‘e5ï‘r­ç—ı–éšeË+ÛN9aL9
-Mù+#ŒR²şC\;ù°W»d‹o€o”‹š\Åÿ[w™ÿë¸vÕÆlâİ€Û¯ÿ-D?E6Rjù~··ÌìĞ¡ÊÑà¿cLÃï¤OÃ%øC;;¾£ÓF·Ë&³V¼ºcÛ[@âW2ßê]°ÏšFÃtÁêE¾( ÍHó|Ã·êÏ~+]è’«Ø< o:šßÿ“>?3KHÎäcJü§"‹iAP7sQ‰\†ê 7ï·É"¾H¼K˜´¼ËŸy3î»«Iq·(‡’öY­`šPåYíh÷…ÂRe'šªI4TK³Ğ¿“çïCJ9cÊÿ2‡U%Ï×Á3Ûó]Ì*ÍíY0]7^»B…Ù.Ñ ÀÚßç¾‡QÃáÅŞf;n'ô—RÌ¶½åù.€72=Y¬Œ¶|oHé~“®lèïC'Ï‘†mHŒàÓˆš&˜†ew®P;ÓÔdáÖ¦W°•¥r´Rš©,	µµ¼M ¤>-€¤¬>ê·]óµ‚–ß®H¨ûsÄwJSsë/Àó÷Øœ°<³*\[õMxÏ­¤qX§ı>Ïú™JÍi¬>eø†ì€Š”º´Ş¦ÆİàÛ5mNåÆWö×øAAøìĞ½Ò©3VôŞc”ëñÇ+®å“3+Ñ»èĞ.á:ÆÜìVG²ŠJÚ[uM¯tÕZ©køŠ5ı’ÒŠÃ’÷/ğÚ>AŞæX¶Ì²êé–Û_`µ8şe¢ÎIÒ»{DÅØEª?åjLµâøpßb€.¾.¯vÙ5­“ÉÌzÒ®Õá—f›=Óóª~ô%%ó]Ã,ù²j^÷İ@iÿvŸ|¢Øœ’L¹é±¼‹™Âq×Xá7¨Ú…LïN:‘Å²— ”RÎ.ge—µÆ,Å|¶NtZ"z–¼Ïs!f†ş1qP™lÿĞ>öí¨ìïúé:ßç9ë:Ğm!»)~Ì×Ú|äà‘ò³_>íôìÆ¬œì˜ÛÎ65kä;uùlõÜ³§/hğx&îĞœ`è²YÄ£KIcƒ2ìH†6"·7Q¢DxFW,vKóOú	ÅïbKM¯WKÊÿí{/x).à¨·r‚=ï'º|N45	còµù|7ƒÛ0¯WZ~§]Hwz©s¡¥1¯[›¨WCïÑ¿?âêŠnU…Gçûêdå„z£İö[®Ók¶ôÿ=Pv/X¢Ç4„÷l‹ ½Yìb:päá¾'¢Udõ¦ëmÓ°«=à]X#¢;Ï[Qè…òlw<ä!°AbW7o*Hİ°dÁ+“1op‡şı±0›‚YşL]ŞÜ0ÄQ]«4ky•®ët,&©;FéirW¥Ry|—¤ÆDeÑ`wë§Ãİ0ø?ÎP_®w/¦¢ñL80&¸M<1cáR»Ø€‘ò
-‡¬ ]¡‡|è+ìÓÂ4I«!w:”„0–½lyV
-)O¶»ÑW•æşWàö/hÅbB®˜µKäåÅv ?ƒ½RÒ{1Íg¦ñ¯9]KŒy4£P5 ’ó F€éı¾ kÌàÛ^ÈÎèå1Û‰™uì+—.D£a
-IocóZ?ÇtF4i'ò1ïÓ¿?…F7dİ~§@x$÷?M”-»Ìµ@0şY¿½˜¬ı*\àßLu)MxkÁ^8S‘î‚Ó…ØaY­ù—>®ÉÆ*J±>5£~Mc"ğç jÍôù_éßû°¥?*æäÒÏDÚc^7ë=ß²›¡=‹ Û-	²0ı’ª÷GÙdElñ>ÿM1û]b8İNÔŠpÁˆ]£”¡@fã	e‰mÃ*]ş ‘…ú Têòñ‚\Bğ
-8a6¬Ç4”4B%Û*Jä5«ø[ÇÕIÑ³ZerL!²ÁŞë¦Öú‚ëĞXş*Õå†ØNƒAsemGpé›†É‰µĞ&JÅ²IÏSL¦¯Àvnëæª*Sx29’R}öÍüSlÈ•7á[bE†©]Zü*$?ŠvÁ¼R™u®\–Ij¤…¯«Ğ-˜>e/÷³—°AlÉO3¹ñ…e|Ò¹ãˆ<Ã‘öğ,»ed˜NèzáÇ5oS„
-µGÂ«ÃÜ¿LI™~Õ¹Ky˜Àv xM½”çXh_>Š—2ÙmDz‡/ƒ¨“Z	»Xg½*šºè^ ÆNìºò|œ>ëÄ!÷b–¤_º¿‰‘NŒÊ#°¥á`ÃËóE·Fëf0:	Ê>J	‹T·ë¦!Zß“pè),~ÚH-„ót#µĞˆe¨°‹š|ÜH-=o¤RĞ¶Ê1¿ÌÑ Yl$Âul#‰P=¯G¡ÓH;!üaò¶Ì_œöİÌ”N0s2!Ä§ˆ6’ş¬ÒŸßDrØ&•ßë¹~à5Ì:™}Îƒçg0"áÌ:sá–ˆG7QÈßˆd5lØ–‹H™jßî°‰t`®’çşaÒä|YÀK¸v…]}Ãß†_wïfÀy‘+»Û‰od¹3°T7º¹3>j©m^Fx=.lÍb#»œåãœ¬æV©jÀÜÈ=Siî™« l‰f`’„¹_r¦“©ƒ²2Yµ¼[9døû‡´M¢	c²¼aú¿‘0çÏFÂ˜,¨÷,5‹,+»íãşå—åº«\9>4íìÇ8UË‡uİÕ¨R³t ¼µl¹(Kêªiä²¾ÌåE´Šc?Éî_€·>ñ§EèJ¸m>†xåÒbxN.94g3¥oÔVnã¾	Zv<³í éÛbeÓ.²Q— 7¼ÊĞM†,ö¿ÜqÖÒjÙ(·Ãd\doax‰"¼ó†£nrRUMŸÜeètÉdt6òF2a’½sQJ”#‡®†I!’¬{"ü{	"|Á£ã–÷D(öÀ#~|Œ&¹Ïò*õ–áhØÔO&í¬!;®’Œ0;ˆç»–İTĞY'Uäw¡(w^]6Ú=€³ë:ËVÃl(pîâu—¿*ŒgËš®Ùb¾!Õtn	ìîueš‹A[tXÑ¼_(¼°EH¢l£E‰’Xªói:k^Á2ÍVb@U²8£ÑsÌûòÉéù²ï”¥&ó]ñqÜÀ{TCÃrƒ©L#‘Úr’øwDáş”]äÊ~!°DÙ›>¯D©Í&{6IÚœ¼™APãù‰YâB.¸ĞÌò4Ù¹ØÿâCÍQsTl´üŸœ¢*7òÏ&*˜†”öÄ½¬=Ï,[Aİ6¹Dg5°Ÿ¦gÚ>9}òØ§så&–ğIĞ8áÉF‡û1±"¡›°>}/ºmÃÏwxÑÈşEMü¼S÷d¬šIÈƒï¸ İÿÊ‡K È«uAÙE®ŒF˜¾­  A¾“30q|L.ö¤ É‘D›0zfÙ»ãJ,%Â 
-3$Ò"˜±ôFÄRïš®A’†G.±n
-²ßQBS×¶ƒYcúHƒHÇ,…™À0,:ê	pW)AÉš7Õ³!×ˆu%Í“S¾XH®û…&eÛ©n÷J”Y¶Ú™é™ëĞ«‚K@ö » š°À™`¬­E)¾½„|2.=²Ä¶µëGÉò.auÛ,ÅğÚÿc5–Œ   1xœ‹àb```f`a’¬@&khˆ›®ñX84[j^™•• \Í  `vxœÅksÅñt:½,l‹Ø€„°ü¶.¶‹¬2`#°ãŠ	Ärbˆ‰O{w£Óâ»İcwO²W¥!)lˆ’TQy|É‡T‘Tş[¾¥R©Òfgwf·w¶çq'ä:ßÜìLwOwOwÏLÏ¾½§R©ŒWjµøÿ‰¸X™øÑõK/V*Õôû>¶ãm<Æ>sÉw­2O.ø•Jm<şõŸJú—=%îúâb³Vµµ6!} ³ÂpL‚6c?‹ÿ«
-•Õó¬–×ì÷IÏî7Vn«ã
-NÓôaèxnú¬H‰×|öùŸPÿ¨×m7\²Aa6ú¶ã³F	™Áx„ ›ìÚı~÷núd
-´˜ŒôcwÁVU¤vÖ	êÅÁí‰äÀj¼\`!:®v|Ïí7@o#ÍÇW=_€>æ ífò~Ãîzn'}8­ wcÄŒÓ)rZv7}¸k4ö,ÆÂ›7Îø{âÎ¾<N”qy_„³ı hs02Aëš‚½MŸØ·Aì#Ò</ıÆÔb¦ëá™XşgpíMˆf"Ñ—ráÁdßöS*ÌIÒë‡wSÕ{ÔÖì`M”èqLÌ/#•“]âvÂ5„ûh«ïTøß6†;p6‰¨Û=û±·’¬'sÄO‰* ‚Ü›µzwĞ¥Z-é0ª?Ïv"~tØ`¦FÁÄªVO8OÉüf”~hùëQú¡e+J?¨É(¬¾ô’‚1™*ùŸfüßFM¬OÂï
-ÍZ…C—Ğk!×t@©ØW3kÃ(¬Q¸yıñHP‰â¶º^à$V°@P=4ò™—«%ér ïşz£‘ÂJUQ¿©¦ã¶L'D2¦ú¾³n‡dH)=Tî‹•³ä2d¦0cZ¢¯ü[T‡yQx*×XB¯ğf>f‹KÏ[½AZMbÅ>£KÚÖªïõ,Ûµ®µbçOZa]-áQ± ğ	;b
-„­²ã³±mä"fÍê õ3»5D·2İ÷üĞnv%´|m‡´œ4pÁCë29Œ¢ßŞXs²C»¯±ù2Á¨ã
-¨+91Á OüòÈ OHf^MÅÍ‚q8aÀ& ˜ÛÆD|»0ÚçY¹Æë0w¿ÀYÜk5(®û®‰V)sÀÒÕ£GÓÚÓàé##0ÇÈäq¬{èb¯‘c|,XäòâC¢êEÏ‚Ñ€®Şj®İ£c*ÅÂëvwÀ˜Dx/€òwXyQ0g:³½È¾Ï*LÄ*'\kœÂ
-È
-Äk–,¨¯ØK—ß§Yè²+Á aÉ[îØ+ÊìÙ·IcÕñƒ0ÙgºNàEõm†É2¥;©õ¬¼ºC°q#Ì]Md2hCtÊùJ„pFbÑÎH,Zi sYİÈ–˜¢ÅÛ“>©ö8DªdÑf	ã>¦%|ß@$>‹ğI9}LùŒ cÁé‘Ëìù³¬şµ(_ò•¶Ş`CŒ¶8%ØóØMèW˜Z$^u¯£ÅS&ì%[†S³dÈG…ÙušGÔ?)†pu8NƒoXë2²+ª_#Êï¬ß¼0î°½‘½N|¬Æ»&ÚÈœé	P^ å‹¬¬ÓüyPglµ'ĞŒj]9mPÛDÍƒA)æÓ1£Óºy±ï”ój‹8Caü2åñKiæ(p>áñòË lÑ/;©rÆ¹kšÅ¹)B£8W‡Ğ(ÎİŸ"„;@)šQi¿ÊOAam«áŠŠ¼Ÿ•áR=ß6Èûu'‹ĞÒc…¢½&:ÑÅ½5^ÓOtÃĞ‹s|ß3˜«¢ø
-G\ñó×i¼Äê.C$4c"º"SQ„cy¥±aôtúm´»¤›#“Cl‰öAçÆ³TËëß5uŸ@9ƒğD~’/×²óôBÓÙt9Ì±‰NÅûÌ¾ñ%İšÁ’ª]P+‹H‹«n»Û­spØÆ‡¡ó”éGiZ`I½Ñ°[¡³Nd»Š;~ 1[aÛY]U4™¸fJîGQ­l5«˜ƒÊªÖë0'—J%9še-‘BÜ¦»‘NûNÖ“[jG÷H^¿ÌÚ\&kn]Z¬GÉğ¦Š¾>Ê6ìÅšıf	®cc»Y|øc…S‡ &„º«
-Ï,Û¤V6Ù‰4p+cÿõH˜´ÓËWŞxëê•Kô´ß`9x¡d˜eØnÌùÒ$2²wÌ8ˆshb'HÄÉ=î9DïFr¢ó¤*º»˜ü*Œx!Àƒ fº8qQ*cÂ»‰#uİ¦‘Ù– ÔD°ƒ:M6PŸ½‹DĞ©òVT1rgºÉ{Ôı„•±éz0ö›®7!½ !®	¡ÓØCH¿av58ŞĞğ w×=®ym!q’XÍu¼`Óñ°òö½4R$y#<µ:a­D•á	Ææ<Ë­©0
-0”•WFÎ!~ôßBìÀ
-„¯˜;Ùy–êhj[hSuŠ%fğDç/›ŒIiÇ›'ò0Wµ®×º-5£FfÑtÙ~¢Š·v™†¬h#4ÍnU¤ª°>WãCN…Ç<ÂVÒW!¬í"Ş‡'Y ªVÿ´ïãŠ¾ÊªDwF÷÷i×ÑGŸ¿ƒÈè
-Bº+àÀøÿˆØ_—›!	rgœô•àj<	³âçlÊ£~:ã_ıü%ÉH°8»	+¿¤1¬«¬|Ù Ì%y.ôÑ:èì¦W×î¦©¶ÃDò~~cÃ×ÙêHê5iÒ5SJlt›™	ŸjÚÉr Ñ&{}Ò©gƒ.r´‰©ÖKî8T/dNĞĞÚëdzydÚuPt‰4“m³)%)Y4W%iKAğ2ÕŞ¦	êíH!Fn˜·c :ôX‡óAY; é¯õœƒ“¯ñó¥«;³mÒÈwê&nv­¥]=äÀœ	‘JÂjdß%™öîñP¨fÙ$àÆ ex¸ØBŒ¬Ù	9&î¥zï^^‹®KKëÊU‡tÛA¾²÷~Ş;]‡Àîb€=†“ü9”#ssé´"¢R™\©cmğù2’,=V¾Çë°©Gqqn¼^§Ùê’É†)Ôbstû!ÒGæê˜&N3Åz 9»vv‰rü2q‰o‡’˜|
-ëwd…_ÉûmK„U/“ÍŸğüMÔ9Ùy.Jà¹åAÓ²İ¶•ìŞ&ZÅ(õÂ5J.Ïƒ·<ßr=wÿFˆ.§ú¤5ğºå×#~G—18î5ß« 	ªkNk­bœ ÊãÁd‹n„7y“ÚX'­X0ÀĞÿBâÔ?`ß¢æ~(YğöbBRyËŒÀş ÙuZ¹1d•‰EU¹€aû™GûİhD¸İæĞ4K‘À¢²§…>ùm±ÉLÒ„¥?‹?@]W®üÀ¿ì=XõÚYœxŒĞ_aZ§ğ4¿“·9ˆFwÏŸ¬bŞ=İ*Ş­}–…vôŠı=JFÏ}ÅŒ+¦—‡”Ü}æQ5aí,qóc‰@JL¯ çÎıé—
-Í¯ßxŸ@¸šõÂ¡L	{UĞ	‚N \WİWØB`ßR…ÍKÑ¶ÌÅÅé¸â}ÿO!fÉ´Æ¨Şu¿ê>‘pO{ú“…péÙœ|Ü[ö­!°cÙN}(3ÃÛ¶3 Ì7Ò>u7@y>ßpbî¿º¸(ğ¥F·=„º‰d-Xƒ‘¶©!mSCÚoY»ß±ïß#m0¼[¼[;ÁûBtãÛ$»„ş …İ¤˜kù„ºµ´Yfêy˜ÂM7•g É3j’+EéUĞ?Jô#ö3P÷‡¨L@	q%­£8Jxí¡,#ë3‘ÓÀËJàÃ9õKçg°İ¶PFàmÂƒbSoËTô-_ñğäÑ§ğ6)Úèâ€C`œÆ}	»X›!'ßÂCÓÃ²­HŞï§H¿ƒ°_µx 6Š‡ù%Ù)úó	Ó°?Æ’ñ-3*ÉÆJzËxs]ŒÇ°˜aÒ£LWT²ÙÆ#0–ôeÛî§¸qBôÄvU¶RFåë„ßÁf­ƒhİœ´‡bNğ#Ïºü9+ÿ¾{ù4òîZ>.ƒdİ ›4¯,¥/ƒpÉÆñykÃ	×,Ûïè±ZpÒjB+\#>±œÀr=+gŒ•†¦â+#4ŒÒ²şK<;ù²O»T‡@í¡‡á×ñÿşWÌÿ‡xvÕÅlâW-6 #³_ÿ­¤U¾RZÃş`Û¡Óõ³ñ¿s§N*ÂMŞG7`
-q^boç’6’İïß`çÄ“í¶ã¸“ítù×Móg ©	š©t_şOœd…–Õ‰.ˆæAÅºnâçi^îº8éÛRæp½>}û[ fİo¦ßHÙÚğÜËo °;ˆ~ÿ5º»¾Ù'®A¿ÇÄ~K±ºš :^#ïH€zaa	çóŸ¡úJ.ü¨´J¶RØš~Ç‘v5î¸J[ğuö¨m˜Ğ9_5÷ínÙ#íG%êo‘„8§¦²<vúº¥,ñSk¶Ó!árh‡Në­˜Ú€ï°–/(}ÒóÖI©ş`Ä›L»ÙÎrP~ÆÈ–ŸŸiO×>Ã=Ê‹˜Üfbšıß	±*#qÔ¡ÑÈSK¶{,´z^ÛY½kÙV7I¢o¨JvĞ5§Yw@™/QÄÃÙ‡°=«{#q2İšC(.0”wÀS†räôJrD•ŸñKñ;—R|qÑó­c)Šc#ğHL-G2q‚zkÍöc4<ÿ¦”„ È¡zşÏ*ƒĞ'Œ†Şœ»='ÈïMŠo…AQ^IŞ?“ãìûŞºÓ&mÎ#¢.àò×ÄF¹…ëøŞ £âYa<Å“.l'X{è6êè„7á)†÷…&Ô”Éš(Z––1’Ä
-“Ï0R¬4l-T%­ÔÀÙívrâÍßYk…¥4˜÷Ï–«ñ
-®‘èvR¹CeÚééÍ¡ ‰¿#
-÷PwM¨ûBb‰Ê·(¯d‰V“·ø¾Ê5]IÍ’°ŞYãÙE¾‰ë
-…È¡‚rGÅ÷Lş)(ªvÅ¿'WÁ"¤¢'íeËñÊ?nÛõ‰İ¾ÛO7´—uı5ÖuÖê`é'’ñÀ»B|ï&VQ¤ªöHÌ§Ã/NxYbú;†øE§š½JA"c]"ü0ø%ãÿÑÓyšWÔ]êÄğ`“É* jÄæ‡SÈ -el°À&9„áw‰J3…c9$_ÉRdUğ­£B:e¶jh¤._RĞ_H.¶‰Ìì	½,UNÊd›9Ù‹FqÃ,±è¨'À_	Ñ½Œ xeÂG;p!×¨u¥ÃS-S^¨¤›¢I™Kß­ßè€9M]A/øşJÈ}ä9¢‰È<àŠ#Ñ 'nHeŞ8ŒãÚæ Ìt£æËÏó¶]~Ùaûÿøá¶³   1xœ‹àb```f`a’¬@&khˆ›®ñX84[j^™•• \ Ï  a‰xœÅkÅqnoïåÃö°“†€‡}Û"[æa6VLB|N1ñŞìnßîàİ™õÌìí€…G"lÈ%!‘P Š”‰Dù]ùE‘n3=Ó=SÓSıØ½3ZooOwUuUuUuwõğÆË²&­j5şw*.ZS?¹r~éYËªì¡?Ø÷şø³hã	öYH¾«Ö\ü=w•4–I°FËªNÆÿ±Ò?Ş`šxk§OŸŠŸV@mµEH€µšiĞfâñ?¡²rf‰Õòšİé9ıúêÀkÖc\!Òi–>Œ\ßKŸ)ñoÓ>ÿêô»­ºGÖ)ÌzßqÖ(!“!˜"È¦»N¿ß½>™-¦‡ú‰[†`+î*R;ï†µâàvåÀª¼\`!:®vßë/@o"Í'Wı@€>á"íæBr³ît}¯>œUĞ;1bÎmÅ¹M§›>Ü‰5šxcáµk gü½ qg‰_'ÊÆ¸¼kˆ³}h³wh‚6Ö5{§qn€ØG¤y^ú©Å\×£±üOàÚ› 'ÌT¢/)äÂƒé¾¤:T˜“¤×n§ª'ö¨vœ°#Jô0&æç‘Êé.ñÚQáÇ.ÚêÅ7-ş·‰áİ;DÔís‹Øi¥ëÑñc¢
-ˆ w&C­G~İt©ÖBc:ŠêÏÄ³ˆí7˜éûQ0±ªÕÎS2¿=L?´üÍaú¡e{˜~P-’QXyî9c2XùŸfüßEMl@¢Aà	ÍZ„C—Ğk!×t@©ØW3kÂ(¬R¸yıá¡ sÄkvıĞM¬` Z8h„$â3/WKÒå úßİµz=…•8ª:¢~3×k%˜ˆdÌôwÍ‰ÈˆRx©Ü+gÉeÈLaÆ´D^ø·¨‹¢ğT®±F~áÍbÌ^´{ƒ0²Ä}F—´ìÕÀïÙg_>iÇÎŸ4£šZÂãbIá¶Ä[eÇçc;ZÏEÌšÕ ê'¶kˆ&ne¶ï‘ÓèJhùÆi9jà‚GÖ;d<E¿½Şq³C»¯±ù2Á¨ã
-¨+91á O‚òÈ Hf^UÅÍ‚q8bÀ& ˜ÛÆD|Û0Ú§Y¹Êë0·¿ÀYÜk5(®û¾‰V)sÀÒ•ƒÓÚãàéc0ÇÈäq¬;èb¯c|,Xäòì}¢êYÏ‚Ñ€®ŞªÓ£c*ÅÂkNwÀ˜DxÏ€ò÷Xù´`Îtfû4û>©0aÿA¨ œ|0@rU®qb+ +¯Y² ¾b']~¯g¡Ë¶8„%o¹e¯(C¸·çÜ õU7£dŸ!ìºM€Õ·9J$oÈ”îÄP­gåÕ‚anèª"Û‘@¢SÎ†g$í„Ä¢•²Ñõl‰)Z¼é“ZaC¤Jm–0îbúXÂ÷-DâóŸ”ãÙÅ”Ï:œ¾(r™=’Õ¿<Ì—|¥­7Ã ˜ã£-ãœ‡ìE	ì³&ô+L­N/ƒº—FÑâû)ö9÷[†SsÎ:³í4©Ráêpß¨Öe:dVT¿Æ7”ßI¾EaÜ/ÂöFö:ñ±ïšh#s¦G@y	”Ï²²NóA±Õ`E`@/0®uå´Am5¥˜OÇ,ŒNëÅ¾#ZPÎ¨-â…ñËâ0_J3Góáa/?Ê¦à	İø²°“*§aœû°©Yœ›"4ŠsuâÜİ)B¸á¹”¢I•ö; üÖ¦®¨È»Y.ÕómÓÜ¬¹Y„–+d¥è5Ñ‰.î=«ñª˜~¢›†^œã{Õ`®Šâ+qÅÏ_1¤ñ<«» iĞŒ‰è¢L}DN,å•Æz2‚ÑÓé·Ñî’nL°}$ÚÏPM¿ÛÔ}¾Ê„Gò“ô|¹–§šÎ§ËaMtp*Şgö/ÑèÖ–Pé‚ZYDZ\u;İnƒÃ6>§L?JËĞKjõºÓŒÜ5"ÛUÄØñC‰ÙŠZîêª¢É”À5Sr<je«éXÅ\TVÕ^›D9¹T*ÉÑÜ8k‰ìâİt[·,TXbl©p½yı2ksE˜¬¹ui²Jx%;Â›)úbø(Û°hö›%<¸‚mâZñáON˜ê.)<³l“ZIØt$ÒÀ­XŒıW†Â¤]¾øÚë—.§§ıËÁ}%£,Ã¶cÎ—&‘‘½cÆAœCS[!@"NîqO!Âxk(':Oª¢ë±³	Á/ÁˆÜòg¦‹ã1¥2&¼%‘È(R×m™m	JMä'¬ÑdõÙ»H*¯-#w¦›¼×AİÏX›®×c¯³ézÒ`é	qM	u˜ÆîCú²«Áyğš†¹»î‘¨ã·„LÄ9Hb%×ñ‚MÇ3ÀÊÛ÷nXO‘äğÔBêlX„µ2´F;$˜,l˜ó,·†Â(À0üAV^Q8‡øÑ±+¾bîdçYª£©M¡êKÌà‰Î_66“Ò	6Oäa®j]¿yCjFÌ$¢é²ıD+®o3+–YÑBh2šİªHUa}.<‡Gœ
-)x„­¤/AX›E¼UO²@T­şiß‡}•T‰îŒ;îÒ®£>‘ÑE„.tWÀñÿ±¿.7C"äÎ8é‹á¥xşfÅÏ(Ø”GıtÆ¿"úùó’‘`	pvV~NcXWYù‚˜KòÔĞGë ³›]u=§›¦Ú=Èûõõ ^d«#©Ô¤a@J;¦”Ø
-è6Û2>ÓpB’å@£Mv¤]Ë]äh{(¦Zû¹åR½9ACk¯“é…miÔAÑ%RĞHL¶Í¦”¤dÑ\‘¤-İÁ»ÈT{[˜&\¨7†
-1*pÃ¼'pĞ¡Ç:œÊÚ I­ç”˜ÌxM)]İ™o‘Æ@¾S75ğ²k-}èê!LˆTV%kü.	È´÷:$p#¡še“€3€”ÑIàb‹0²æÛ$ªçd˜¸—Ê;ïäµèº´´®\uI·–á+{ïæ½Óuì.Ø8ÉOÀ‘cA92×9—Ë¢‘ŒçfÒJÉ¤LİlÏ±$ë³ò»¼›Èp¼àù×è&k5š».™z˜z­#H·›!}dÎ¢†éå,SãP ç…Ë'ÏQ_ 	œÈGÒ”aı¬0à+Yš¿c‹°je`2¢ùRÆ‰(;İE	<µ<hØ×²“½ÜD«¥~Ô¡äò¬xÛlÏ÷–øo„èòáj@šƒ ¤€=´uùƒ“~ãmIW]ï¸Íeœ®Êã=Á«dKp„7y@“Z_#ÍX0ÀìÿJââßcß¢æ¾/Y ğöïcBRùÎŒÀş Ñu›¹id?–‰EU¹€aû™Gûíáˆp+Î¡i&=€ErÏ$:=ôb“¹¤	K†¾‡:²\ù·/X8°Êå“8ñ¡¿Æ´N%àY~-&osî\?ÿHÅ¼."zÖU¼iû$ôè…;ú{œü»ŠW6L/ï)¹ûÌclÃ`¸µ4Î$)1eT¼œ{8wÇ¤_*4C¼F|Cà}ájV{„>0AìŞĞB':Xp•uWa}K63EÛ²·í‰·ÿ?˜%Ó£ú¨û­P÷±„{Ú³ ,„KOêäãŞ@°oŒ€Ë}êC™Ş½e¾­ö	¨»
-ÊËğù¦€sÿ•Ó§¾Té&ˆP7•¬Ë`0ÒîhH»£!íw¬İïÙ÷6ŞŞ­à½O!ºñİŠ‡]£`ĞÄîU,4BİZÚ,3õ<Lá&Œ›ÊĞdMˆù5É£ôbèŸ$zû)¨ûã°L@	±•ÖQ%<†öP–Ÿõ©ÈÀYàe%ğáœú Áù)l·)”xwáÁ	qGoÃTô_÷ñğTÑ§ğ6*Úèâ€}`œÆ]	ÛX›'ßÂCÓ£³¡¼ßÏ‘~{a¿Jñxlÿ³J²Sôç&e,Œ%ã[fT’•ôÎ=ğæº@`1Ã*¤G!;™®¨dsGxÜXÒ—M3¸ŸhàŞCÆ	eĞÛUØ"H•»¹|?›µz
-B¢uÒŠ9Á>Sèòg¬üKdlø^æãÈ›Dhù°’atƒnÒ¼p.}5„GÖ/ÚënÔ± = ‡láQ»1ˆì¨Cb»¡íùvÎ;MÅHh¥eıWx’òUŸ}©@î>Ú#Ã	®ãÿİ¯™ÿ÷ñ$«‹ÙÄ¯[l Ff¿şk¥¾RêDQ°ÆíĞñÚÉø¿SÇ+ÂM^PÆDq'6vÀªvü0âeºµZ¤#1™nºÿy(¦ißò~)‡#ÖO:ı>R=usàx(k1ü² ¨ÂûşÈãsA6ª~_€¶_ŒĞ/÷ñ˜®f'í wAa³Ögaë
-K×`½ş¢ñkR¦;×êĞÓäÕ+3~Ÿ¾/¯#¬“FPO5¬î{W—_#aè´‰%œ¿BşeÇtEÂğş&ªÔ^ûúÄõ,è¯Ãûˆ÷\l<Æó0"æËäæ€„Ñ˜˜«ôNcjÑL0ğ¼4WwEŒ7Ø•NÊû}ûA£5‰„^Œø6‰^Í-ıùznÌä§…Ú³D~L’ã³òiæ»„÷O¬‘`=p#ìvÄñ¾êĞØë±sw(²{~Ë]½m;v7I‹¢oçJÎ4gw·@™/ÈÄ£!Ùı«°=«{#q:İˆD(.o”÷ûß‹räøJr —ŸhJñ:—R|qÑìC)ŠCcğHL«GnpÃZ³ã1nĞK	ªì[¡§=ğd6Œ‚x
-jèÍ¹ÛsÃüÎ¨øFåş•äİ;9Î~à¯¹-ÒÒà< ê.M$˜ûüvàú8*†ÆS<×Ãö½µGŒãNx bx_jkéˆŒ‘ò e))cI¬0ù!iÉÇ†­Å€ª¤8§ÕJÎ÷ùûzíÈ·•&B¹œı`=Ñ1ì\v‹Ê´-ÒÓ›CAGî î²P÷¥Ä•oLP^É’Ì¦^ñ]sj<³”š%au·<DPLf—ÿ%FÀ
-‘CåŠïıSPTíşÆ\‹Š8¶—MgÛÛvâ´nÇö“„Ä‹l×c]ƒu·ÛX²d<ğßÑ<‚‰‰ï¤íÙóÃµÀğ‹^¶{Ó¿èT³×HHd¬»0
-¾Ó’qçÓÀõÖÜĞmtÁÜZn'ÏrëƒºËB/lc. V@½_°8…tØRÂ
-‹t’3(~±ªt.U8•D’W‘”MV_Á*ä–r±„õ4äåkúIEÄöĞ™¡7ÇÊªl•˜½u·ÔºÜ£0²“ëÍŒ d+•¹FÍ-jİòŒ•oí@³'ûÔÛ KP“Eˆï
-ÑOLO4'Ó€LÁ#¾8:sêé–\æ¡£8Öm¢L=ªn¸ü4oÛå—?6ÿíKÄÁ   1xœ‹àb```f`a’¬@&khˆ›®ñX84[j^™••% \!Ğ  Dxœí]ë“Wï}ñÜB@™<€İ ÀHÂ
-BAA#KBÈlÏLïn‡™îIwÏ. U–!Ñ
-$¢F«RÆŠ¦¬òƒUÑò¿ò£ß,ËªûvßÛ}úö¹y,°K-Ó{ûö9ç{î9ç>ú7o®3cØ(ÃÿGÂKcäõó'÷½`…-äú¹#ü]	Iå!ú;}‰ğsâ‚UukW¬À0ŠÃaÁŒø‡U³œ¥™™ûÃÛP\¬[VĞ5(ŸQPgè§á®°pd-e%›=«i¶*óm§V	™ùÈCãäf`»N|/+‰[}›<ó?®ü!·Q¯8Ö2¡Yi™¶G+EbRÃ„ÙhÃlµ×â;c Æha?tU“lÁGJ×Û~9Û¸u1±"»Î(†´#Ûë4-'àH¯ Õ‡ç]£>d#õ&|ëŠÙp…øæ¸DŞõ˜"&ìz(‘]3ñÍX¥¡§1^ºx†Ÿ“wÒ°ãóíDÕ^oêàjßêlíè°mM¢Ş‘ªg™W@ì——¹Ÿû3‹‰†íÃş?ˆ[oÄ„0#‘½Ä”37F[¦ÛPfLZÍVp-6=ş‰â¢é/ò=:…uów‘ÂÑ†å,‹ˆ>6‘ZÇ.ìgãíÛ×-Ş¶›æUJb£;¬ÇRÆó&À“Ü5µ¸§İ V½i7¦?vJ"¼µCc¤ï@É„¦V4OÄüF'ş%×_ëÄ¿äºÔ‰Q+IX8zT¢˜¤ŒôGÑş'QëYAÛs8‹¦µvÁ¦dO­Y:”V1jÁ$,ºiùT‡3‰	Ë©5\ß¼`F ²ß®úVÀF^j–Vƒ €7—+•˜V¨*ˆùUm§qÚÃ‹1Öòì%3°ºìå¡'ÂM¡qæB†È&J‹ÌáÅóæ0Íw,4ıÀm!º™ÕâXSÓ¥fÛJU«ÆŒ†U/Í{n³d:¥s‡Jağ·jAYŞÃ½6bŸ$&ô¥H[æÇ×‡~´’v1­V¬ŸTuÂÊxËõ³ÚÈòpŸ²ìÕÁ]ÛÒIlÜ^^´“C¿¯ğù¢‘5
-æĞVRaüvËòò-ƒB<*yE™63Îa†š aæ£î@kŸ£×EV.¡ÙıŒfq7¬´ °ìÛ:V%qÌ@K™@víŠK€»zP–Ëc\×‘É^%rÆx[°Ìå…U’êÈ‚É€ÎŞŠÙ$mÊåÂKf£MoèdxÏƒëgéõçÎTn{†~’¸0È4„NÚĞsEfq|
-Ë1Ë¯˜² ±b#™~¨$©Ë@ƒÃ\´ì;*ŠnmšW¬Ê¼íùA´Îà7ìà‹ÚÛ’U¤Fw°#·³üìáÆœ0stE^mHK Qç‹D3vPàÑr™L’èJ2Åä=ŞºøN9³ÆÁK%Ê6s7Q{Ìñû:Òãë=IÛ³‰Ÿu,9=Æk™Şš–¿ÜI§|¹¥7Í˜ñà³-Æã„Š‡íiíã:òK\­ª'^e/ucÅ«Ù'í:<V»®æ„¦Ufà2÷hB4éªxìé†_·Ş¥9DVÔ¾zl7ì¿C
-~Ó\»ÁúZş:Š±ŠèY#¦{Àõ>p}œ^«,”i{-Æ^„Œ½zW&´6Şò`RŠÅtÌÃ¨¬nš¶KÊô­…¡0™î¤ùKnäHxnëdé±ëï‚kİğ ª}IÚIŒS3Ïİ¦`ª—çÆµò\C­<wsÌ.xöÁ’w	¼Ñ~\?;kEN—7äÍôNÕÓeSßz§l'Z¼­P²Wd'ª¼÷¸"ªbö‰.bhFqÆïU±Êw_f‹+¼ÿŠ¦Œ'iÙ)(ƒ@f¬‹N‹Ì‡ïÂ¡}i¡¶táôTö­µº¤#£],ñşAÆ“	TÍm]ÓŸÇÀuBáÑt'=®%ûé™ªëãé0ãÆ8™îÿÆ¦hdi;Ph€RQFšu›F™‘Ã>4ƒ§È>rÓĞŒJÊ•ŠYì%K´ªˆ©ã·ÔíùyI•Nkºâş¨ÓJfÓ¡‰Ùh_›VŠKz%Úšëe.‘ìB\!«‘vıªvÖc˜ZŠ;mggZ>Këœçkê]j´nG‰¶ğÆ²±ŞJìùŠõfÎcmº”½ù†$¨C#\ÙId-RKm‚ƒ4p)Sÿù7hÇgOŸ}íÌé“d·_c:¸‘¤›iØ Æ|niù;êø14Ò ‚îd÷0ÒouÄB§‡ªÈ|ìx$ğK0ã…·B‚ìîä¸ÇI©H	o	z¤›^W-é-	
-]äÓ/“Ãò½w^2T^ëZáL5x/ƒ²Ókl¸^Š½L‡ë%(ƒ¡îHÈk„+Ã,v;ò\7«Lg:HÃuÓ
-İ:wqŠXHm<ãÓñ`ùå{Û¯ÄLÒJøÑBlh†5×1ºÛ$Î,˜³SnU‰S€iøCôzNâàb[ÿ5ÄÌAú’±“ìgÉ¶¦V¸:(“L10‡ÇQÛL¤MR?Æù<^‡©©5ÜÚ¡Õr“ˆ¥‹Öeª¸<`UìÓTE‘IktË2U‰÷9øLu9‘è›IŸ´V²|‹Œ`‚(›ı“g·I•NP¶Ók»¿¯)»J>rÿ"ÒG§¹ĞU@æÿ;ùçUg3)B¬A>íŸ!ç©?"QSšõ“ÿ
-çO
-Z‚0€£Û¢×Gu^ŸÒàÏ’<Óò‘2ìÆçmÇlÄGm»IˆbÏy•e/œ$³#aTÃ€’.êJªá+`Ø\¹ğ±ªé[Éh´ÊFÏZ('Îjt¡ÃµvëªMìB5½½ªOO O@ìº¨=&Zf“ö¤`Ò\[Z…·‘¡ö67LX§^éHºQÂÛ1}4éG8’z€±Æ{=‡a—‰¼×ğ‘Ü»;ëëVµ-^ªi;É{--ë¡
-&cÁRJ%+ZKìmpÖŞY´<;àŠéyğÎ¥XÏ˜\ë¬ ’Ê¡a
-7n¤¥èÔ47µœ·­FİÏÓ—>½™=OEàã|=„‹ül9–—#Ãié€$©ë¶’%ÁµÂÆLo½éÒë¬¿°İ³t(•ËäÌº`Äa6µŒxÕ*F€<#
-eÌÇ©íúœ<Ğ)O;t‚èü”åX¸ÈñäıØs;ç(ñ¹äx¿Yâi•óÄDB³)(Ü…ãÍN´«‹
-xx¶]-™N½­áFvE%uƒE".;_r½’ã:ûØßˆĞùMUÏªµ=Ÿ,ü5-oAunpØ­¾m ÇT—íÚ¢¡}L•Æ»\4I¦ŞˆnÒD&´²dÕÂŞşç‚Ğş.ıä-÷¦`bÀêßÄ:I3[íjÃ®¥şV|¯“5åÊí}d1î×:=0Â]7£¦˜4iª=Ù,ÌoòU&¢*ô4ßá[HôJùŒË‡+œ;„	úÌêd<Î^‡Ië@ºFµÏî SŞ$ë"²Ç•}Ãöišà‘íÈß½œë¹%qygAíruDIhš[ãÚşo~ èœRºåËÑ¹- s«Gù…¦ÉWKo½!]Å¬a÷<v»c  -8»º%ñ…À¿Å›æ–¼o™Š½àğoı9†5&õuPö+®ìCö”{@É¤<Ş¡·ûÂıNÜ±3O-ØgšïÜN€k¶œö(» ®gáı'ş33œ^Šdñƒ+‰&„y2˜h×¢]WˆökZï7ôó·HŒïß;ığ]¥]ûŠQÀ®ø×®aïSLÖ<‹„µ¸ZâêYšÂ\s•¡ËâÏÕD/Å/„ş^`ç˜°ƒ²ßuòäqá‘ã£éEç²>æ8¢¬€>Sï!<?†õV¸k„ŞuMzp@\—Ğ»£Iú‰^·ƒö°#<|LauŞ—ÔQåÛA;[>×°:]¾;ˆu·ÌîtÄÏıyn+|®İë%¾ÃS¹¾“<Ï8<Œı!×–Do‰S‰–VâwíA4WåxlãËæ¡<’¾ÙŠ¬o®síá·sö²¢G÷#İÛH;a4ùz:	’få¶c6[Ç¦µ”HÙ¤ğ	É˜`ŸHlùzı3¤møæ‚¹QÒÌnĞEšOÄµ<5]Z¶ƒÅ’é-´Éæš¿·Tm¥`Ñò¬’í—·”*¦§¦<p„BQJÕßÅ”»½ç%Ûú¸Qn}hp•şoİcı¯âVó‰÷ºÛ Äı×ˆ
-l¦´­öóCÊ‡Â‡÷ïßÓêŠôï-”û\‰eŠ|ïdTñ0z˜qÒt¶iù¾¹`7P5kW|6%:Î•yÖ;mË ûÑxáş~'–²É/º‡DåÚ=4‹=ôóSĞ7Ÿrı${.]ÑËÈOnıt/Ú"™a÷&n:gÈ)9#ú›ÍüŒ3k(ïg>eä;\[Â?kJ˜vÕ†X`LÎ€¨»tãì¨í—=s9¾ó9gMé|¼LTbä=Ñ#ËX¯FãõÂì9Ëo¹¼N†Ùnng0³¶½lUıQ²ì[N—jë/˜£ˆx†®x•m0ırmÑôÌZÀÎk|ÎÙ…|ÄÕÜ:‘”"Íÿ‹÷,áÜvÅ¡\Æİ1¥ÕS6f›SeGÃ3®ò×.\_†§yÅfkæD ^Æ¶‡‰ÀuKäz\‘°¥&dè:ÅóXÂ£
-ñ3sh–ÈÌ;ä§âù0ÂS)Sõ%–ÍôŠÊ¹á•ÆB2›~Ğ7·ÙD`›—Pºg3š=Äˆ­ë¢b–(½'.à/Ÿ„ãGé’¹¨n¡-ÙnÉ °,wjéËHí‚–¹r®\†Y¹ÊÂ×UØj›â®!N›|$é‘Ô$9[Î°%uŞ¦ ×pAíYp½Zh‘èôÿAEˆìº©§öHtuPÀû«ÿø-Vç!>>Ûğíä±›·Í¡ù2b;æpôDvĞ^QÄ;Â¿ZĞ½‚$Ş2ÀÜ‰K&×3ôZ'¹ñ¿l5!Ê#´2¾p´!LŸB+ñ(û2A#ª bt!€[?Ğ†/+èÈ@ØÖ@×@Wµ>`Ä0ûœŠÇˆ¡B¶PÅeN™µWˆÛØ\aJ]¯\áI¤~?È„§ú¤-‹¯öIû^¢f¡ì%$„üyÃ¼àêÃ~¯{èÂ7©ìø~G„€:‚gÀõY,†Hôñí~ˆèƒüÓ…DÅQ_õ‹öÛr)›I¿AT´×ÿ~ ùŞèî]aÇëyÜäpÆı‹µw‘+»×{2”.TO¥ëË¢÷¢ëx	ú¦W¼<Ùğ¢¸U4h®¡ÜE¹›e€´ƒp`0ˆPæº®ƒÈqkhuy³¼Whuü;Ú®
-1Ï5hº¼n˜ı¯AÓáúYƒ¦ËÓvÏ@àdøsì]«hî«òJMWhbš~ö…»[¯Ô
-®	é­äËE¸o™WfF‘é›Û®s–¾Å@çÕ®s":¡L¿z
-C—Ş€ß%);­>}H|\³cÙ7Íİ%Ë‹N©Ê3İÌÊo€2ôğàã'LgwPjºu{şZÉ,5"8Orf0Â»Q`O]×l~ÄC©–En‚2td4Ò@îHBòxˆ±¡90J¥ˆ\»cş»÷†W1¿ğÒõJ»c»{Ğ?ïEÇ6Ø¹w0r¸²†lŸ#hEYÌ<ÛYPÈŞñ±ıô»ø“C(ËsÑwÆ¦<[»d×­º‚çNŞğşW¥wÉ*Ø‚ç¶[8+æó3íÉâRa¸-Jˆ¬^[Ç}{½¤y_(¢˜°EÌa¾Ñ"Åz,3ø4ƒ0o`¹f+9 &YŠœY¯GøtäMÀÀvRà–¤.‹IÉËåf£Q‰lÃëÓ˜Ò{jwÈõÄßƒû;(;Ç•}!ğD9]‘ïb£¶òµé	„5ˆLÜ—JÁ„tõ&ùòò)‹æì‚*6şg¨ÊúëRÌRÊFâĞ_ÖÌ¶o•ì°nÃ³ÌúµĞZa”l‡>úKìÑõ¥,RĞ¸Éf}{°nER2a}zJ`~À‹fì5ùóA59O ècÕ
-A7üfíN‡í,Ù¾Á±J}b3œÖ(;Ç•ñ	Ã á`@¶ 2îœÏI’fJ›ƒ\¤¹N”R³¯É!+epµ¨ÍCÔeZ‘†iCK$–¶6[ƒ|Iœô²´ŸüÅF.€ÓÅP`À1}  +Ó©#CDøj“GƒSàf!È·XóÆÚÔq¸¤yøÜe42„ç€÷2[.XÕÙèEÖÊÀ¹UààfLƒa$A× ´bVØàˆŒ@ª0?õSéÉ,-‰ÑA˜íVÛAbEÛŸ}Õm°¯-Xù?R6 _   2xœ‹àb```f`a’¬@&khˆ›®ñX84{j^™••¡ aù  xœ}PÛ
-‚@½˜èCÿĞ(öùÚô*a)èºF—/@u-•­Yfvçœ93Ãîm `À9FŸ`ì¶g	À&OhïI$å¹¸¨Ì»<+Ïó°"BC®^èe-ê¦Û¤ñQ‡ú¾$¡8É¨eh¥FÔUÓ¦êk¥N…²È„bì¢ü¡ kG¡ÂDšk
-¤a>Ú«×‘W‘ç®(’¤¥¬j(1;I·(ù³(ÄM“™îÄıÙhêÇß÷™/ò   Âxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨KAbIşÄÿ@úä«Á¢
-r†§ú¦–dä§@%$y‹õŠKK2“ Æ0ı‡ı v¡Ô   ¢xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨KAbIşÄÿ@úä«Á¢
-r—$–d&@´e™şCµş Ò  xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨KAbIşÄÿ@úä«Á¢
-²—ä@ÅÄåóòòK’óóÊR‹Jò“²R“TšBrNbq±£XÁ2	¦ÿP ›+¡P’¯¨P\’X’™ t,Ôd=¨ú »¬(M   €xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨KAbIşÄÿ@úä«Á20ıI 0å   ïxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨cøÄÿ@š%ªÁ¦¡
-²ê9'æä@%$Dâ!öÅ'%§š™¤æ%ç§¤¢YÅàèìíèîŠ¦æR°¡Lÿ¡Nù (êV   ğxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨kYbNi*ñˆÿ4"I2VƒMDdÕsNÌÉJ IÆCìŒOIMÎOIòD³‹=ÀÑÙÛÑİMÌ©`™şCİñ ÂĞİ   ùxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨kYbNi*ñˆÿ4"I2VƒMDdÕsNÌÉJ IHÅCìŒOIMÎOIòtÎÏ-ÈÏKÍ+A³”=ÀÑÙÛÑİÍ ˜›ÁF3ı‡:è vÅ ™  vxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨cøÄÿ@š%ªÁ¦¡
-2e¦aåNÌ«Œ/ÍËKÌMMH3ı‡šUÊü‹6–â’ü¨¸ ’¸„cNBfIjn±Bniq‰BRªØh=¨™ÿPÍF¸8ÉrtI¶Ò¼ÌÂÒT,2¬ Ã‹ÑÜÇ Š#,0   ğxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨kYbNi*ñˆÿ4"I2VƒMDdÕsNÌÉJ IÆCìŒOÍKÎOIòD³‹=ÀÑÙÛÑİMÌ©`™şCİñ Åƒç   ùxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨kYbNi*ñˆÿ4"I2VƒMDdÕsNÌÉJ IHÅCìŒOÍKÎOIòtÎÏ-ÈÏKÍ+A³”=ÀÑÙÛÑİÍ ˜›ÁF3ı‡:è yÒ £  äxœmPÁnÂ054¥jØaûPwAìv…Ã¸MQH¤¬­UÚ—ïRáRĞh•D¶ã÷ü,ÇG 	0F>¥'¤‡¯ÏÕ€%”üÁpæÀ §¸ĞˆM¸Ü3ş¾ŞĞı(Š‚²®çÉfwvö{ÁÜ£ƒS’Yã‘ÂükjŠ¯OLj²ºASW~ÒîÍ£@#÷Ô`÷(érS•ªÕøc‡ñGäò$¬EíêpÖú¥—}K-œWá3­D©œPü"¬)E?QL¨ZiCÙï‡ßàÁºHi*­ğ~²şÿë‡ì
-ºB¬  ½xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨cø&È¬§§fø2Y}5ØTA&]¨(Ü„¢Ô,
-Ù
-‹KR 2H2¼6Å%‰%™É‰%v\Xˆ*(øä''æ( UX)@;U ‚LÿÑÜÄÒ	õºéŒ\XLâNË/ÊM,‰Ï/()FHsüÇa>;P]f~^1Ô
- 2-ß  /xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨cø&È¬§§fø2Y}5ØTA¶‚Äâ’T¨Œ ’ŒˆMqIbIfr@bI†AIf~^±¸Óò‹rKâóJŠ!ÒLÿÑÅU’š[PR‰f›M^~^ªÔ½` Àå&»  ?xœU[kÛ0Vb;‰İl»°½ha¯5éËØB3ØCÂ
-ÍK3¶§"¥6Èl9¤¬|âI¾Ä¶¢ĞÕ8Gçò}ŸğO   Ueo™@[^ÍN?  *lñdO¨@gÿ›Ò Şä+ãÌ|Ï~G£Ëo3O+´¶ìõWpö×~è"zİ€Ş²õ ÓÏÏÆ¡C?±Å3UÑ~§êÎöùiî-<r|? ïIJzëØ³ÊXMœÂª2Í)}^ª&2fg-óŞİI¼]'2½˜,ÔKêğeñd"ñvön¨-©}œf•ÏN.[øtÙvZoKç‰,Aó‹#AÅFnk…½ W Ô7è¢  ·e¤›HFåü’yÒ6ˆÄøğĞJø EòHuÜ4ÈaxšÈ†pR$<“%´†R¡O’Ã#ãvM}oq1ÿvy1ûÅl£<ÎZ¾\LÍ¯ŸçÓE=I$,:>_ÚI "Ó²Qˆ,ŠÃ
-ÀNTjù„  ÂbŒÿSò\Ú?£ÎX€„‘­ÖËŠıJè1Wü:I 0­Uµ’)>˜\%Äô¼€paèx+¼5mê’1Ÿ­²¨#½sï2g[$ÔS#¨“õNÔ1C„P;ôãR~Óñ&9B².!ør5¿„|¤"LÓ6<X@Ÿoı:‡h `º¥!‚6F+Fã&
-ºyqòˆ8+Ä?00`×ÊeHnlö6o‘x…9µ›µ¿‹3ˆûÈ÷wç³ë}   òxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@Ş?<3Be«ÁQ93óÊ2‹3“rR±H²ê9'æä@%$„ã!öÆ§§–ù¹—$– õ³0!)aptövtwEÓ	s0Äy` Da  xœ‹àb```f`a’¬@&khˆ›®“0ˆ¥ø˜ÍÂÀ	’ËKÌM-2ÙËR‹Š3óó ê~2@ Tš-£¤¤ ´Êã2Ô3BK¨z.¨]¨l½Œÿ¡V±Bus$eæ¥dæ¥ÃÌNÍKÎÉ‡ñ¸KJŠ2“JKRa",™ÅÁ&0µ9ùÉÙ©) [r1 ‘  Ixœ‹àb```f`a’¬@&khˆ›®3óX84{j^™••¡!ùˆÙ¤«š SfQöÌb½¼Òœ¨\¸,µ¨83?j8TÓ,&0ÛØèB„Y‘¥Q¬¶²B3Ÿµ´$3§M¯ 19;1=5Ãn$Ul%%¥ePYdsÂ?  ä#³   Ñxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@Ş?<3Be«ÁQ™lt±ˆ2ª@azé9ùI‰9Åhâl‰¥Å©)PÛ@2\`Y‰ı ÷ª   Šxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨SfüÄÿ@ºd«ÁÆ10ğ80ğ mSm  Qxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨kNjYjñŠÙ$«Á&¢
-2e¦aeÏ,ÖË+ÍÉH1ı‡šUÆü›A6ºHªA²H²¨&ÀÅ9sòÓãaÆ¥	‡ÕlÿÑ,D187±$9C/±("Æd,¶2û»¹afu
-òÂ"Áîä‡MÜÓÏÍ›A.®N¡îH^Ã.™ye™Å™I9©IvdÿşCÇ No8²   Êxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@Ş?<3Be«ÁÑ£±²äd— )&d…‰@‚Ä°ÿÀ ÿ šÁâ(âÿ ‡ù+  #xœ­WÍoÓ0wÒ´¬İÆ†@;!ä–I;­c…!´‰'Ø$¤V/u—HiR9NiÇşh®hÒ‚Ó&Mâ¾|m¤J“Øñûú½÷{ÎÏB¨†4Mü×Å-ªŸŸî¿CH«‰‡¿hq¨HCMqmœ½IøÔzÓ}+~ïÄûªQÂÍsW\ïÄy¬KÌ)¿çÓƒª9F¦{öıü˜Ñçl1®úáüvb¾e;lD,ó†$ÓêtJt¼2\œ÷áª©ù1ŒrÙ	¥÷«+5h¥ÒŸ˜n×ö,zWò,šØ0øÈºÔÂ\Êa’¦ƒÆ¨½äœEíknÄ3ë~Ú†_Òõ4]t…O=Ú/!]Æ¡´—9án&î[~¶®:Õ-o@ÈÛ[Xyœ„bË¹6ube›³‘I±v°§9mƒ}ú“‚¨&ÍåÎ b¯F«Em›GËñÅA…b‡áÓÏß~œtËã•ªËtyÈJ”¹ùÎlåiÇGp˜oD´2Å&MFu¹æ$È¢ˆQ€X'ßLÜçá¹â‰âãº¯\@ƒºä®B¤´˜äÙWÏ2
-8¦<‘á	Î¦¬d¬ ÿÖ‰=»ôl›Œ‚PUL2¼/ ~sØ3s¥<ëÄAre²tO¨ÎV¡b*3\k"Zà€öûU–—9Z_A |Œóò>%¨"à|íÇq ğ‘Á¿LnàÊœ /Ç¦˜ZtDm.CõˆÚ.åcH›eäg5ÔŠ¼‘’—µ)g	ä)]6 !1£v)ª¬|³ÙÂu#G2ªİÕÇÁÆJŞÊr:å QîuÊ˜ÃdG†­‡eªÊœ´–;G vm«Ú‘ãò¾V…A€ˆ¥-¡\†ªŞ?*äuRï<ˆÇk© kw“k*(ÎVâvİÙèÊ‰2,Y‹1ª,„M8F) yP*É+AŠm^[‘ó8›WåU$ò­dJBi]Ğ/Û>,lR"î.g¦}!æÅCñIyˆ÷:Óé´ƒ{=Ü™Íf=ØŒqéYÙë,+#ït6ä-AæÇñRÀ‹¯Ü!´÷Ü  –xœÍTÏKÃ0ÎÚnşE¼E/º9=ÈE¼xñ àM²šÙJ—–æu0ôö*‚3íZ›Å×Á<™Ò6}/ïË÷ŞûÒ‡EBˆMG=ëjJê÷wWÍ!­>>ÈxXÄ!êİğ ¢d-µNÔuÚn·ÕzKYj¹§1ğ¤š|ªû+Ôœµ×qÒhù=Ìúö†Xç|ÙIŒ]Ö(ßãWğù9bm\<ƒ‡Ä®f«Êñ5‰k0´˜CÄã¾Å@s0´%&†‰¬ÏŸğäP„0ÊíkšİËº@û‰Úå”Ñ˜º‹™<¦îBüxRÊÔ0_øâ™JˆÕKR&ÔœïŞ*Dv_T < aLoî¯¯[3¤híí!ÖÚb\Vmşáj”CÛfÛ&•HŞ 3¬¢šËÅüU°¬ÚYSËä·¤YÃ)+æ{‰pÁs¡NœU'Í‘”GÕŒ]a²UR/ØÔeY¡ğuŒH=-“Äµ]æ3ĞòI=[#<bcTæ“Q2rĞû[ĞÙDëÃ…{œ@¯c¤W¡æ9K×™Qc»—A@'u&BÑäı†…~f:a;èoO&]fğÎ~yï¤˜­ØOç\;üc¡“ÀÛUfí§ä»=­æg«2!xöáşnE«§PFOI•\rßXâß¤›à  "xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨cø&È¬§§fø2Y}5ØTAæäÄ,ÂliùE¹0¦ÿšù?ÄTT‹S€” ²E\PÛÑMåÌÌ+Ë,ÎLÊIE2¤ğ ƒú¬  "xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨cø&È¬§§fø2Y}5ØTAæäÄ,ÂliùE¹0¦ÿšù?ÄTT‹S€” ²E\PÛÑMåÌÌ+Ë,ÎLÊIE2¤ğ ƒú¬   ¡xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨cøÄÿ@š%ªÁ¦¡
-ò$%§š™¤æ%ç§¤Bä™şC5ÿ Ã¸@  µxœ}Á
-Â0†³µ›:Á‹Ï±1/¢àYğàI¯C
-ÈVÚl>¹Îl«XÇ0¥MòıIšs  8§×£¼Óq® 8£ä¹ÀaBŞOeY™,XDK:ë8©Ş%â…§…FòÏ>—…â,‘r Ï³…R¥Ä]TÉu¯	¿Ìõ­RçŞ®ùİMhè‡øšÆ5P;Õ˜(<X²[wÏkëï~û¨È#qËp@
-4Ò<ş;¨Ù0»#ÍZékmÛÈ„6’  «xœR]Oƒ0-6‡‰ñ'Ô§m&›óÅhÉß|R£>-\¤ÊÊB‹ñGø{}aÖ*Cˆ– ½çÜsoûè „:È²ä×–[dßß]Ï²:ÒøDÛe"õå¿
-±J3e9§“3ù\L§SéoJÄPL_Ğ%Ä©¸áEP…èÒ "eÊ]fŸ2	ñÍ
-:W.…Ëü	¡o%û˜k,Wo5ñŞPÃ¤AÚƒŒD‹®¨Ã
-uì…„aÊ¸ Ìƒ8À·dÔƒ‡8y…äJ’¢­QÑ,“Û›†B†»MM¶5’7iŸªË™¤Sâ?YêÑvDD©±Nì)“3™âşê¡3Ó:œM­¶QSßÖ‰qòÏ1üjbÒ¨éîGI-ôô¾z¾K—+—ü»¸8ğIÄ.YVÅCÉOÄÛ
-°ëºxÀ…OÙ`ÔåS¾"Â‹8¶´ÕKR¶`ñºáìŒö¨vò  5xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¨KF~q	ş.^_„Mœ9±  ‹0kaif*H=XşÜ¤ˆ±ì@ˆ Š„
-T&ÀšœZT–Z„&Áœ—Z5(ÌôB3Ci(Íúªæ ó¬Ä  £xœSßOƒ0.Ø†Ó¸WŸ˜ï›Ó3ß|ÕD¾¹
-İ B!´Ì©û£}5&bK÷£ëª±äèõ¾;îëİñà jÀ²ØÛf*°ïn/» ¬;|±L`&ÛÒ¬˜.Nîqï”=gı~Ÿù›Ìb,+ƒ4dû—boF8@³&1;|+àÎÆ1ó´˜„¸ÅÃıæQ^PN4;…q@¥X •8’‡ñ^İrÓhFcu>_[İRãat4ÆVDzœ<ô)Ên–›­4¡ÆêÄOªÒÊñÜk{]|€åúõ»Ã¡ÍÑ}	ÕD6tW´M3Müáˆw~ä%¡Şò ‡SÜEIF_=BóOzR-¿ó®ÂOFwqš'¬™oèÊeØhwã%Â$†$TÈGª#§yŸæÏ|F*»…[»üƒQaÿ¤ ãÁ?zÚd%(|ZäHWÒ8"TäÙºU=Íø %ì`U‘Ê&Üçu¹ZyªIÚdÛ‰g©•B¸n•aº]
-áºS
-áz½²ÉÍü¸TMyÔ¿ÒöYˆÒ#wMpöÒß÷  xœmPÁNÃ0õÚtUË„àÊ?•‰3W ‰Û¥©”µSâL|9—…¤É´¶,ÑkŸígÇög	 )â¾™£}¼?/ HêŒ_'…ûÏâÖì¢UŞİŞ»ûXU•Ó'Î3‹‘¢ik¾¸‘^ÖzŒDk*%
-Õ™/1ÁD¶ğeVLP¥9:ûjË®ûf‡	¹à´æJû~n"íóy¹£²©)6];É(ü£”!Wı
- .O-ögZ*ç{&MÍÇÓxÙ¨îì'Ö:“§eô=©âúŒ°Ğ¨C£ø)8·¡“ÄxÚ Ï‰p<³ç6ÀóÂü›*c’j=ÙüµF·2öJQ¼lıîtôp¦å›¶S·åoşv&Ë©ö˜ıè0Xg  ‰xœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F˜ºâÔ¢²Ô" ë7ÿ‰ É2VƒDdÊLÃ"Ê¨ˆE#3/#µ(³¤"ÇôªF ÙÁ0üƒb¨)Ìÿ±˜ÈR\’_€ÅMÿ¤¬Ôä…ÜÒâ…¤T…Ä<…|ˆH~šBrNbq±Ä=$‹,Cõ‹
-ª{Ùÿ#k ÁË1   öxœ‹àb```f`a’¬@&khˆ›®3ó“˜X84[FIIAi”Çe¨g„–@õL@F¸ºÄ¼”œT ë7ÿ‰ É2VƒDdÕsNÌÉJ IˆÅC,//NÎÏË‹OLI)J-.F³‘=ÀÑÙÛÑİM3ÌÁ`c™şCó 
-»‹      u•MhAÇ7&Õ6ikk+B=©`°ÖÚC%­_ı¢imÕê2Ù&k7;ãì&µÅ‹‚'Q‚ˆ âÁƒ½ˆ‚A„âME<zñª±¾Íîæí$5dóŸß›Ù73oŞ¼ÌÅE‰*±üÖAS©›™NïïW”MmåO÷ÂÓÏ&øşíA®Ê+UñĞnäÎŸr÷”ÌCïe>}´7ÄW@? Ï‚^ñ(G]ñĞ,ò™S 7Cü	ô6òÙè½¯ƒ¾D>÷B?T?ÿô;òù× kÈn€>EVİØ"7·³Aï#kG@WBü
-”"ë»@¿…ø¨@¦œárş¹¢D~#_tcwy1UÅA²™}‡\H€?Ùr@"3È¯È3dşxò%÷¼Ş 7Ÿî@^A[‰(1¥ÁMZ‹¨–r²zÆ­IUOd&SÃ#ªšôÍí`ÎôŒQ'Ït{šdMŠ}õÉœÉ²Ä´}nLr¢-’ÿ¾-â|VÎ©ğ-›3T”*Ô0K³µ¦-RÇ7$ˆµ¬-wÍºoj"vÒvˆch“ÄÉûÆ’1©å‰ šSñ»]îÖé)šÁrgïÆ,±i_/µ4¦;kĞ©K3S'|Ã¶Ša˜8³¨¸o×ãª^ä¦¡‡ª^ü}7Ó›Š¡ÚM+½¬™Efª—×ºÀD8µëî¨é˜àÁ¬`ò„×¯2îTL9êLsçvÚœw^,©pH6¼,Ü° º¢ÈƒåÕ<M
-†¹°Ér£´DÍ ÊG¨š†¼±Ór§7•Ğ–ä¶o0"èká–°A"TÛ«ö,ÈÒ4*h°Q´¤$ÜbZ€ø4"^3mëÿ&„¡ŒK/7/Ù³,•èº ¶{ÿú	¼º(E‘ÏÈC0¦íd¨´ÁŸò¹ü¹b·ı 9ºOîºe.TzãºP©‰}Já ïî„w!w_N{¥%²îW“DpÉ©Uè
-ÂéÑ»¤±İõHÔ+ÑA‰ú$:$Q¿D‡½8+ñr),?ÒÚ£A6”ˆ0ÜJW9@A¨€k‰®¦{tP’Àé?şêG×  decodeURI	encodeURI
-decodeURIComponent	encodeURI
-encodeURI	encodeURI
-encodeURIComponent	encodeURI
-excludeStaticPath	staticPath
-logLevel	logLevel
-staticPath	staticPath
-staticPathOptions	staticPathOptions
-‹      ‹àb```f`a’¬@&khˆ›®“ ÃÁÀÂÀ	¤9Só’óSRCƒ<Éà*.I,ÉLH,É€Špää§û¤–¥æàT!ˆñ/(ÉÌÏ+f``aJ0B°æ%æ¦P\›’Šjµ\À9?· ?/5¯—+…àèJS+’sJSRƒ©ã† Î®qH{    ÉxœµQKNÃ0uÒ„~‰s€[…´°d¨«¢&•*6ÈMœbê|í&í5—â\ƒ v±E²ÅRœyc{æ½7ó  ,Kì¶=óoÏ.0O%øıƒñÀİıKMIËÜO&(Æ¬ö¼s“iH’¥ˆ?kg+˜¤DÃ0Jiˆ«ÌËÇşÈÃíÆ¥yU>G«¢<î‹µL §<Î¶ôÎ÷0ŒÅ£áb^9ã†ğ‰ól]Â%ËÖx6ŸOC¡ùX¶¾~÷^ß^¤úCîELs7U²}?ñÆó€+x´ƒ¼AÈÃÿ	ùái|©¶êØ¶j‡±vXaYHBá.'b,Å™J˜U¨4|¨™5=mV²J­ù³dzãFÖI$S¦ÔiªQq^Åšc±ó.ô]š+¼cşò•„‚  yxœÍXßoÚ06ğkmİŠT´Jy™´IİRVµİx\Çª=MbtêC¥Ê%†fKœ„ ùŞÊìp	!$ÚJÉF$ó]°Ïşøîbç¸*#„rHØ§ÈL$^v>¿yÏî±›"BY†O=P‰áŞeû‹Dh×PTÚ—23²¡Aù¶rã`ö-
-»
-ÖU':Ò¶ºé±E·ùİlá ½˜ã‚WyõT0óš]Á„„ºÍf#â v5lÛ>ÁÚè~Ö¸Kfuí¨_Š÷f§¦À°fãrÓ?Q—Ö‰²‰•¿äIOXè
-ß[í1ds\6À
-Ø•õ‘å"^S¬Ç)—µrƒ‡›©œ !`|q½d’k*¶Ød «`WS–n7îÜĞMƒê<PCtã¸öşÓPİ8ÖÁ®§~ŞV¹Búù;M~#Ò/råÿeúÒ­š~Ğ­°éW İ
-)¦_6¢a¦œ$ÙüP^ ¹ËÚN¡­d¸·ûNñPÆ:ÖÀ®¥ä­k…Ø]K5Õ 	*rÏ¡­5ÔÅ¿µØ>ÿú©Ã²„ĞR‰u58K^¹X’×f[9¦±=NË'ÀÈÇuG<Ü[_>—Wu¨rLcOzœ¨ÛÀÈÇ4E­§ÍªZî ÃLĞ
-0ò1Õ]>¹W5T&¤‘ 	GøĞÆı¸¦4k"F‹i¨uÃ>?eÓR]ìÙÅ–Ü34…X¶<Ë÷æèìDoœNÆ'Ú`äşèìQo ±«OåÜvts¢]t¾™Ï{vzÛP>Ÿ(òã˜CWÖ1•ƒ­åm[I õ{æG³N<ñF£ˆ×áKé‚Pb1êŠt;‘,c<éú®))†DG"Šêğ;L£ó‹¼ôËø¬ÿg€bt;“ø/ÚıÙì†5×r!vşµqCë‹İÙ¢i[„ıˆ`ãâïıoõõË  ÈxœµQKNÃ0uÒ„~‰s€[…¶°d		Ô©bƒÜÄ	.Î§±ë´;Ö\Šsp ØÅmÈKqæí™÷ŞL{ €p¹»2î}pyt
-€}¨ÀïÈÏèn_jJ:öv2C)fµç‹,Ì#’%2ş¬ÍaQ8†•0Îi„K«\ˆÇşx˜FëÕ.*1+VÅ‹´/W’Á NxZ¬éUàcŠÇ£Ù :ó<oÁ'Î‹¥€)Ê Í“,0=DRò¾ê|şî¿¾½(ñ»ÔCŠ˜¡nëdûîÖ¿†\Ã½ä:şOÇOëKwtuÇ–tÕŒÁ«Bjw9‘Sá(-tÂ®"­áCÜªéi³2TUjÍÿ˜¥jôô{°7²îÌH¦˜2ã¨¤Nsƒzˆó’Ì–›ŒC˜bîÒ<|Ææß~­„]  xœÍVAoÚ06hÊZJ»'÷0i“¶¥-¢İvÙÆ¸ MbéÔRåb“¦IpÜ ¿|·2%¤DÑéå{–ıü>}ÏqŞU!”Cš&ßyé¢ü¥ùõí{9z.„²
-3Ë3ÔĞ®Ä-&0q)$:eÙ®…2!-YXèĞkA,éEÃ5³yeÆW¼ÇY_&ŞŸ'FŠˆÁÇ±¨Õ·&İßhş<nÈÜ°Ñ8‹ä{	‚ŸÇÜèan*$3¯ê
-[¨Tj6;1Í ƒ<_—›şZşI8›µ%Ğ¥ìí¥âOØj?›Ok¸æ”j€%ğKÛãº–K¾ë’Á:ár –ÂğşSá48‚pÕ·Ë5áÈÇ&A›`ürÚÊÙ®`Ü%‰Ê-?ë®{ÒŠ€‡à¦¬œŞıÅ&#Ó>À#ğ¶¬]6¦]¦¸¡hj®A°­‘ŒÎV¯óMYAN…Uğ«)—z¯KYĞã¶/lÏMPRñxöoÊï|şş¥¹†¥2=‚`©Ô»²¸_ÍŠŒ?âo—íöë9ï€š
-+àWR¿ïb­û™€Nã}´Ñ˜;ÃçvH3BÂ¾çPÆc46†áõÉE}pz>×á(¼ë‚Q88‘å¦Ñâ´ÌÌPû^œßœÒµZ­N[!üûĞ×X”í]‡&°Î.f–_ê€	²<¥³Õ(õæ%n1—qÉœâ›	æŞxb1÷¬©‡]O`Fm¡&nå%o¨Ô¯}ÑPemõzæÄg0Üµæ»{|)åJéÏ>”m¯t+duŸ3ŸpF#¹TïñğåtHW  ÊxœµQKNÃ0uÓ”~‰s€[…¶°dˆU¤Šr§58_O“vÇšKq®Á »Ø¢Ùb)Î¼±=óŞ›Y!ÔD¶-÷–QëŞ»>9GÈ:Và÷ä×@6êî^ªKÚÖn2&•ç«ØO/düY9ã8ÍYA€â‚ä8Lx@sË5ÎŠÇşxF›õgeñ–¢³¨/×"ÆB”nøçR2NÇ£ù ¸pgà%@º*pDb,€ ó'–§Ó@Š>T½/ßİ×·%Ÿ¼Ï‰0ä-lOîÜÛ™l!Ô(yø?%?<_ºcKwlJ_ÅÔX¬±*¤f¡q˜œ(Õ	«´†=ôFEO[ä¾ªRişÇ,U£§ß£ı¸–ugÎbÅTG%uÔ# 9›¯€šŒÍ„{fîòÄ¦[æßrS…:  e|xœÍ]ıWÓH_Ë‡ È"*~İU¨ÔAT@DW?İÃ²ïî³'$Sš5Mj’}ÿñ÷·İwnò„¦µİİ©ZÎ‰Ï´å™™{ïÜ¹3‰¿iš6 Š‡Õ†~Ù}ÿ‰øî[ñÍ¨¦õö	œq~¦Í¾ô¸p¦3?ĞËøIJÌ=øƒ¦ö'^ùÍù{ 
-–|ÿàşÖoûÍ¯ô=ÃãEñ—'è;\#ÀÛà·›Ş5,ŞU´l.èÿ´èëô¹s´¶¶Üô†!ÃÖ}¿IÏéßÖşŒ.zKß_Í¯úXı)úmÿ_MJû€ğLôº¿şIÚĞ§YMË1«w}½ƒÿÙÚû¡…Úê7à$ødzj[júèèåV]7€î"¼~±g»nf8µ#éªmcvºmé~5}À)ğ)Å}w‘ŸvÕä?wÚ…Cè6Â+àWºÖ…Cè6Â«àWSîÂ‰¦.ìk×eõ°Ø ò¸Î'Wj"5”8“Ô·„[j´É.ûğĞŞË_mµ‘{8>­<ş®Ù*ş-Áø/_R4¶Ó¬XuŒÀrf„¸/fğÆz˜ÏööX/WÁW»9Ö÷€kàkŠÆú[äcy¶ëŠL-(élØ!™ëÀàÉıŞ*2İ©1·(¤ŠÄÒ;¬–¹ølŞß{¤ß‘5ÕåÈ”Büü{Å¦:XéÀHIà0ï–‘’ˆ;ÀxAÑ¨“#-=İ²Eà
-øŠêqİıeg§“q}
-Üßìæ¸>>®h\ÇsäÅNGQ‡ô½ î€ï(Òù¾ÌuÇe²¢KQÆòYE÷ÄdSµu«[F>cVÀü’[µMf9"$‰o)Rğ’~d¹l3FFâ{ğ÷Šš¹YôÜr¨¶>‘şX¡<Àg>›.¢n¥b[†&:åÇ%×æyÙ¦­ 9+0û¾30ûñ&÷Ï
-[Õ&…îƒÕ÷Õ¯TcÆ¹›ç·´I .5>Z·…yi¡#èBÂqğqEBGXä€Ò"G!l´Q°¢ÔZD“Ÿ”‚²Í6Íò‚Ç ’p<Å…IƒàÆŠºm%Ï­–:–|2	gÀgI¾ÌuïïFI÷(luª9a°ÚeğËŠ4O	Í\7¹çw,w	UTyšÌøH·-3š"ÅÒ‚ÏCäù30ãş¬´¼DØŞ¯Hü0	E1¦=Q5Œöµ¼yùîLmUŒv›z^Õ×[e¹ÃuQ6ÏO}m=>d<¸RÙÏ—Y ¶Ó;%KOoK¨i»†n‡³¾ÉÀkà×”/½¬€—Ûˆ[h×Á¯ŸuÄù»º‘@\½!îz+FîÜÎSFO:IÑ3pÂàRv—ş&±«o©~å ù0	¥]QFËYûÜ	r§‹×@¬YÅ²Ï;â&«VdG„5|şN‘¹lGEÎÛm`ÿ\å~à'Ö²at`bKÕC¿z`Z7×«mJ6,‘	jàİŠ3	1ÏÀŸõŠS’¨ÍâêqWĞ[1eÄ8—XQIÊ¦½ÇaàEğ7–µVõ‰+¿ZÂuÈ•L^Ô«v@¹•çXÚ§à)wysW½~±óó–l®J
-—€À)÷ñ6Y‘>¬jéœc´ÁPšÊbU*ë\$õ	p|W‘ämªJêÑ4hM—ûÎ\Àø‰å(0—‚ R=bÇ–m3«\æ¦¥ÜwLñæ‡‹e›8[ˆÛàÛŠšø^LÍ×ñ9;-ĞèÆ§C@„ü·…Å<®›9ÑÀ@ÌŞs¸h¢sÈ—‰ÌØ_.&ıÀ•mæ54Puùy‹VÖ-‡í¡Ay¶O•v·X¤ÂHTFVYáô²î<ÏŞF;aHö*ÛÀD­mo)Jƒû{¿HÇ$Ê·‡
-Wr1ézŠ0QÚSb›ğaËña´õKnKæz.‹½#×àæ¡İ‹7Ê5iø\Uâz>±“2ç3I¥7Ññ„‰ZšZÓ¥n•5]x	x\õQ®¶¦K". ¯‚§y’+ùÛüéAšœXwˆ™Æ¶İcZY‰¸\?§,Ï¶²µjÁ,p[;Šº³‰Å‘˜7àoz%Ù'Qoˆ«7ÄİBoÅx–+‘ñäF‰¤n¦E“áxŠû¡ŞóMz—¥™àÍş‡0áóÃc!Q"—HÂ<0œ¤ã?5çp\Ub7QñÜ#Ëäf¸µ.)ô6l…0±÷£4üÿ½©´Hã4p|¶[3ÀíÈ°B¼bÍ·¡Ã
-"m	ó¥ëÜ	îï×*[}yöZŒ:?ÑË›G¹»¬±R®ß«JV¾ıú
-@fJó"Tk²™jP¼ÿ$#k²˜*!gİ2Ù|&ÓèKJÆy2Š¤‘R ƒA¯uL{>kL¤“îµ&½7IŸ ·ÀÓ\6TÓ~hŞ]gˆ¦¡…ÊŠşD˜¨fvÏ@— &Q=SÒƒCá¢_Ò*IØ,0‘8+=ıé¨Còî ï‚ßíÖ ’ˆ[À9ğ9Eƒ:E‘¦ê#s˜ãv2ÂóÀUğğ§š‘ÆçÀ×à¯»9ÌkÀmpU¯ôêˆD½I .%â²X20İ¤œüo27ÉF$î*o†éÓR½Fn¥Îbîßë•á&Q	ÄÕâî ·b<Ë•ú0JJ¦9d8â"±åƒõ¦iQÑK·O5Rõ+\3ø‹sácáÉ²ØÙdGä.^Gø\Õúg4®3ËzÿL…p|´[Ş7!&q¸7ŒDK ®Ş7ŞŠñ,½¬~ÚVR5M7ÃÀI-õ›øCµ“MjŸ¾p˜[AHœ®èAÀ='Ï~ŠÎÙµh©é:v4½ºEÙQÉBá.¸ª­æ÷‰¶øÕJÅõŠ\İ¨ŒcÌ<Ú—*ëQ¢*½u©Ç’nfb¢V²Û™ÑµÍo`ij¬N.¿]@ªxtDÃøuP0!]SÀKàiŞÚİòØì\F?02lƒeNjÿÍÌu2À×÷ÀSL"åxF«'ŒàJø6Ö§oö÷ªŸ3,Wı€•ô#±tõlœî€«ºqE=zÆŠ)k¦9¸áYí7#•5MÒ7œOñV#9Ó$ç—ÁUİCô›7tŸß·Dêø"?âÙpW!±3ÖÁ˜_®§ù$‚–c.R'cşøüe7Ç|ø
-üU¯d±$j+¸”ˆÛ‰ì±naá¶~ºNê1Ç#g”6Qş…©\ô4‡èPl;ïG–â¸ª°º®f­°—)Ù;°LSL§kÆøœšd3ò?îyŒR§¢¦Èf¹7¿˜•õDºÜ W<¾'æaè„ÏÀŸ)2‚oØ|R¶	|®*V¬`ó6[/±'4F‰ŸNë28bÉMÙbGFJ˜¸Á¿;ÅlBL|GŠç¸¿.“¨Ç	Ä¥´§Æ>>1§…¢xK~¨¢Âqák»ºi,¸Ô¬æ:xÈÙtáY=äì_?l¯mØ&µç€×ÀÕßÙ&l“ˆ!àupU÷AæêÏ:¸mû_<à$p™uè¸^K;Òø\ÕŞÕnâq4á­nt¢·¾Ñ9‘Vá4}´ÏZ¬Ú,¼m®æVÙ±î„gRQ—oé*p\Uîf›æ±yÛú$í®kPKx\õ¹€L!#ë ¤ïp<Å½x9%·€óàóŠ†ûN–Tƒ(cA˜£ç	'îàì jLÂ³Àà5`Ô
-:3Íu˜#á(ø¨bÓËÌš£—-CÚB×ñBÂ«à)’³P1œOñÀiCŸ=Ì2ß¶5Ãû“¦æÓº}¬×ü0­Ö}Ÿ›Lş>,jÇ5à.¸ª ›¡Vì1êÙ0Ì†w*P€ËyYK~
-ë%Ì€gz>'"µYà*x×	J"¾Æ‡uT=ô"3t‡Ì•ÎcQFÖZŸÂR	ßƒ«ºkp-Ü=$;½Îâş:İdCĞmášñ´áW¸aEÆŞ; ı¼ºÄİşÉ´A©=Œ|4y [v«åÚchx¦©[®|ír
-c	L{¹»~ËğÅc%Å?×¢­Âà)>ó¤M±öS1ÃÀ›à)fªráè9ìğø-EŞ/í©¤Šoƒ§x\¾§úœS¸iãÔC/4%J¯ªÿvÏÄt‘|]¨xÖ‘ğÂ‘îŠ®M§²
-Ç'…ÏG¿/>^)?xT;Y±?ıQ<ö‹ŸË‹âëĞ)ìö‚r¥foïÿÌô¹<0W———WÌBT™/”u§P÷´üÙFwü›úø•EpK}™D?4,Ğï°mîpO§³5æ¹'µCî,­1Ó7¸Iª©…iJÓçÑF§ìÇ‡M× ³œqz~}ºëÕ;³ağâ¯0pZzƒ× v¤âq±ˆç¢§û«ô¿]üùà¼éF  ÑxœµQÍRÂ0¥ÈÏÁqÆçĞÀ  Gêx‚¡u†ñâ„6…hš–fiáÆÙ—ò9|@M0¡r53M÷Û$»ß÷í¤…ª"×U{M…¨öàß]"äœjğûG'ê« 5w/JºÎnR˜ÊÒóÆ’‰™Š?Kg§Ë	Pœ“G	i&q±Â‹ü©=èÅşzÕã‹"
-YD‹¸­ÖL`!N×üÎ÷(§ƒş´^u»İ^ˆç é2Ç1XŒÌ‡)°DÈóq¨´k
-×ïŞëÛF»°¯!àDZIÖGCï~€G[=şŸ •/Ó±f:V•½Öij6XÒ#1¸	LHœš„S„FÃ‡™}¥¤§.³@W)5ÿc–®Ñ2ïÑ~|ucÊ„f*­£Š:O,j€ŒM—@mÆeÒ»°wy¼Ğ-óo0gˆ-  K8xœÍ\ûWIn"Áâu-å¡‘à¸È ">Xõ`fg~ğO“®^;İ±»ÈşãûÛ¸u»¿&ELœ©˜‚pNó}×WU·î½u«:ŒX–uÄ”¿‡$µ†~+¼¼óXşuVşqÔ²2„Gc´†%^_¹-8ªÂüˆ•‚EÂn‘UmQ,k0£<ıè¦óYØÛ’©o2XXû£ĞúÌ(,†¼$?şdòñ‰:œŸjyUV¾ªäz\ÒÿYÉÏŞr¿¾¸ø åCEÏ¢={Ÿmı™\ô’o­Ïú$\AEf¾µ( NƒO'Ï;òí¯¤}÷9­jÚÄ™¤×?ÈNŸŒEÙƒÿ^Û|ŞFôê>àEğ‹½İVËĞ'ß®´ëÁ#è5ÂKà—ú½a”ƒ}¬·¢;¡í¹vÔAÍ ğ2øåwa¦¥F:uYs†ï™—×)qõL¤ú(ûW¥«}JÈÀ™áá>ñÉáQ1tã&tèOÒqˆ«§ƒ>üw}hsõı‹µ6*br¤ˆËÈ¨ŸınVÏhëÍ¢'	á9è=Ç˜ë;|·,*[b…ÍßÖrÚ‚A$á9ğs†_d¬d{(‡Am»,%¿\ÙøØ…æaèŒß¼‡ñgŸæqÆ¨?Ëvq!EOÖDéÎãI}Ù#J8>nÎ6ÊÜvxIÅ‰™Y}ÁÇ!òøØÆ5Æê2>96M<©™úÛ.
-ÎÌw¡üÔ^¿fHùc|·èÕZ´¶Ü“H8>fHnfV[Ş)H"Ì€gŒg+µÈŞn—ğ…‚Ó–¹À5ö³ÙÊ(Œ/E\½N©¬vÙéğ^TĞ}ÆJ×ôn6Á^‰¶ÚåO^—˜í'l.d´(cnÄª!¸/r,*5Ïa®`[œE<¬s‡Õªº#rs‹ğøCsli§Ì}&Êœ=W¶…ükG"Šÿ§d’L&–¶ß`QmËqC^AØXÖl˜â0¬%ğ%ã«1WğJ‡^NÅ<f¨—µ'%‰ZVWˆS²Ecn­“Ç8®¤eš²)/ÈÿÑSŸq¼Eî¥ß]9uh*9¼d×<A©CçXÚÓëv–†âA7“²{À‡àÏñbà´À$"|şÈÔ’!Ç\ RJq¡"ÓZİÉERß¿3$yªvÆDÙÌ	xäO™%Ê<<GvëË5…¨ÖêlÇõ<æV*ÜqmÁ=¸ïÈ?˜ ÛÄó‰±Å¸¾n¨‰oeh®Êõ1g¥0¨Ä3qË.~Ù–DÊ/ÿÊåGN6PÈè-˜Ïeım&V”¾&~ºú"Ğmæ4ğ-ø[CÍ\£†Ul×g›hĞ+”¥	¥­¬âv“UVy(½bûE>ÇdBCÄ.IÚ«n•­µ¾fØ)Rí@×'Qİ29,Ÿ¤T~Õe«³XÆvıHH›ÖO[2ïxæ²tväöMóØîåu‚štøÜTâzÊ®V=·/Â§#¦©T©«kF³¦Kİªkº$ğ<ğ¸éò{GÓ%§
-72¾s¬Tó‹4º9¹î‘Æó‚ZYI¿\–ÿˆCO£í\ã?\ïaÒ[‰¤+ó
-üU¿$û$êµ‚¸úCœR›<ğ•È	µØª©ûŠ•!Â1ğVÑb½§ZôŞÿ"Á«Â¿6â„/bv˜Ö(rJçqØÒöÿÔœóÀuk/Á3b+'«aPwîÄ[^šB¯ÂV•Š¦Q÷Ÿı±©tŒ ¤ñp¼‡µx½p51¬¯€_14Ây™¶Ä†¹ø‚ûâN¡QåØ+˜c/å¨ó]»Rõx’»ëëUåzÓD#M9ûó eoÀÈv][“Å’®É^ƒ©2pvX&{s†p|ÂĞ8&4±Qª t1È“À»àw{Ïö'ÒêôZÔŞq!©kà½\î«¦	¾+òwŸ2xÓ¥ØBuEÿˆĞÀI}½1—ÁMeÕCñ¢_Ó*IØ8PáF]OfRÛë´›À)ğ©ÃTq8ŞËÓrû·u¥§©EÈã|æİŒğğ	ø“>Í‡Hã¯À—à/s˜ëà¦2^íÕ‰z¥ .#âf±d`¶C9ù27ÍF\OL'ÆYğÙÃZ©_QÄÜ¿Õ/ÃM¢n+ˆ«?Ä1ôVŠ¹RÏâ|‘¦dJ³À“à=\$¶=cğtÅq\*zÙŞŞ©(ª~Åk†hßâ\Î±ø(O:ÙtGdÏ#|njı3œÖ™ugÿ$L…p|ø°fÿ„"F9!×ŒDWWˆû½•âAÎş‘æa=MÕ7¬dÒßÀó³	öÔŒ¶¨ıçŠ³ÜÒ(Ç«¶<ôçØ‡ä¬‘×H–šï5˜ ğ”tGå4¾7µÕüViKT«VƒPç"ïFeœ¢`‘i_ªb‹b™6ªìö¥W»™7ap„&öa»3ºùí,mÊŒÕéå·Sè/ÂôÀTÏÌìßë¢`BºÆ€çÁÏÛÓÓ“öVq’ÎWï6ş;9İÍ _Şïa©?À€·ÁM%XŸ¾*>4ÏVj‘`e».—º3›Dç€à†ÄŸDQîírtÍT¹_îÀöH#Õ5MÒwxüÂa™&‰8¼nêŞ‰_ØLÑøWæ¨~$3ğ:Ÿw”±.Æüp|Ñô˜K‡ÔÍ˜¯ WÁWsÌŸ_€¿è—,–D­)ˆËˆ¸Ä›Ön›§é¤óƒÔs&iåO‰›"Ok§g÷tÛ9“XVŒà¦Üêíx5»íÆx0Ÿ’½-×qd˜Ø[3¦çÔ4›¡T‹âĞ6`™?3{B½Hw&’Ğ{À%póÇã;ÌD‘>fÈ²™.
-¤løÜ”¯XÀæíl³Ä®,hŠe^ü²W—ÁKîè;”Š¢µ ¾pXÅŠ˜‡à=<Çıs˜D=RWˆS|Í;²¸¿OS2Mî,ĞT©s°µÔù1¹YJĞ1åø#9w ßINkãö#:¤$CÛ2›‰4ëTÎáy„¦K¨ÈÔÚ“££ã<ôm*6]Uº"dàÌ@kûå{w›w!>½–šhØ£y®ÿ¥ƒ˜ià3ğF4½ğJ"&€ËàË†L23×)ùÑ¸ı
-\_9¬H”SfÀsğçıâìIÔª‚¸ŒöÔÈ';Ü®U¸/Ú}EÊ(ºhÎ2~èYÍG7|1‘úš(_İº-x¾n‡ùRàÑ6V~g7ÿµşyşÑBåîÃÆî‚÷u§şŸÒN´SúZ™—?Û~¾ß•jÃ[/|äyzßG·î:Oîß¿¿àä“¥L¾bûùï¾übnÓé ?“>ÒÈ
-¶EGÑê«r7Ù:÷yhSz«ÁÂ`·±Íı{‹rÙ/º¸C·ø6âƒè-ï?D¢ô»—2iXv‚"íãÏáíäİƒ°Ù§ûÆ0ı¹‡ñ³z7†ûÄ«†¼j‡\6b¯.EßNôçÿcÑßˆ‹      eÏ
-‚@ÆÇÔJ!(‚z€Î²Ñ±Cı!¡ë¦S	æ†ŠôD=SoĞ[T³j,[Â:óû¾ıvö6 è`ô7©ÓİÍúc€J;•¦Ğ SĞT’MNå&Ùr¨íIîŞì)YP9Yâ’ˆ]0¡¦™›¢…‘Ç}t·óR¨‡ü´ÄÃ’í$eià­Yz.•–TV×4à‘ğ|ı‡ŸşeƒjKÉµ§:ï¸Ä›"´öşÉYÅ(›L
-9
-™ÀÎÅWÿ¾?cqÀ!-¦|oŒGŒi+Rñøåc’ /L?³\}Æ½  ‹      ½Îïj1 ğ¨w&¾ˆ‹rœn/°1(ç	~Ój[­öş6öôåÇ²!øgBÚ$_~Y÷ AÀoÈ-„«ôcôĞòp¾ğÆ²6^B/jÔ…•ªvØ\±ò›ñ,Î&ÓÛ5¶UãOºq®²1Ç!ÇÊÊ›ıL—
-µ±j6İMä{E±Ä#Qyñ˜‰U¾/¤Z%_¯‰¼“§–I[¾•Wö!Ú–EG‚Ì~!èø0İÓÌyI¦ÈİA—éÎı„P›Ú7ƒÿ%À–ëçÒáİÀ  <!DOCTYPE html>
-<html>
-<head><title>R: httpuv shim for webR</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
-</head><body><div class="container">
-<h1> httpuv shim for webR
-<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
-</h1>
-<hr/>
-<div style="text-align: center;">
-<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
-<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;httpuv&rsquo; version 1.6.6.9000</h2>
-
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
-</ul>
-
-<h2>Help Pages</h2>
-
-
-<table style="width: 100%;">
-<tr><td style="width: 25%;"><a href="encodeURI.html">decodeURI</a></td>
-<td>URI encoding/decoding</td></tr>
-<tr><td style="width: 25%;"><a href="encodeURI.html">decodeURIComponent</a></td>
-<td>URI encoding/decoding</td></tr>
-<tr><td style="width: 25%;"><a href="encodeURI.html">encodeURI</a></td>
-<td>URI encoding/decoding</td></tr>
-<tr><td style="width: 25%;"><a href="encodeURI.html">encodeURIComponent</a></td>
-<td>URI encoding/decoding</td></tr>
-<tr><td style="width: 25%;"><a href="staticPath.html">excludeStaticPath</a></td>
-<td>Create a staticPath object</td></tr>
-<tr><td style="width: 25%;"><a href="staticPath.html">staticPath</a></td>
-<td>Create a staticPath object</td></tr>
-<tr><td style="width: 25%;"><a href="staticPathOptions.html">staticPathOptions</a></td>
-<td>Create options for static paths</td></tr>
-</table>
-</div></body></html>
-@media screen {
-    .container {
-	padding-right: 10px;
-	padding-left: 10px;
-	margin-right: auto;
-	margin-left: auto;
-	max-width: 900px;
-    }
-}
-
-.rimage img { /* from knitr - for examples and demos */
-    width: 96%;
-    margin-left: 2%;
-} 	
-
-.katex { font-size: 1.1em; }
-
-code {
-    color: inherit;
-    background: inherit;
-}
-
-body {
-    line-height: 1.4;
-    background: white;
-    color: black;
-}
-
-a:link {
-    background: white;
-    color: blue;
-}
-
-a:visited {
-    background: white;
-    color: rgb(50%, 0%, 50%);
-}
-
-h1 {
-    background: white;
-    color: rgb(55%, 55%, 55%);
-    font-family: monospace;
-    font-size: 1.4em; /* x-large; */
-    text-align: center;
-}
-
-h2 {
-    background: white;
-    color: rgb(40%, 40%, 40%);
-    font-family: monospace;
-    font-size: 1.2em; /* large; */
-    text-align: center;
-}
-
-h3 {
-    background: white;
-    color: rgb(40%, 40%, 40%);
-    font-family: monospace;
-    font-size: 1.2em; /* large; */
-}
-
-h4 {
-    background: white;
-    color: rgb(40%, 40%, 40%);
-    font-family: monospace;
-    font-style: italic;
-    font-size: 1.2em; /* large; */
-}
-
-h5 {
-    background: white;
-    color: rgb(40%, 40%, 40%);
-    font-family: monospace;
-}
-
-h6 {
-    background: white;
-    color: rgb(40%, 40%, 40%);
-    font-family: monospace;
-    font-style: italic;
-}
-
-img.toplogo {
-    width: 4em;
-    vertical-align: middle;
-}
-
-img.arrow {
-    width: 30px;
-    height: 30px;
-    border: 0;
-}
-
-span.acronym {
-    font-size: small;
-}
-
-span.env {
-    font-family: monospace;
-}
-
-span.file {
-    font-family: monospace;
-}
-
-span.option{
-    font-family: monospace;
-}
-
-span.pkg {
-    font-weight: bold;
-}
-
-span.samp{
-    font-family: monospace;
-}
-
-div.vignettes a:hover {
-    background: rgb(85%, 85%, 85%);
-}
-
-tr {
-    vertical-align: top;
-}
-
-span.rlang {
-    font-family: Courier New, Courier;
-    color: #666666;
-}
-
- asm    dylink.0à-# T``` ` `` `  ` `` `` `'†env3_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEED2Ev env._ZNSt3__29basic_iosIcNS_11char_traitsIcEEED2Ev  env
-Rf_install  envC_ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev  env_Unwind_CallPersonality  env__cxa_begin_catch  env__cxa_end_catch env	Rf_onintr env
-Rf_protect  env_ZSt9terminatev envRf_lang2 envRf_eval envRf_unprotect envRf_mkString  envRf_setAttrib envstrlen  envK_ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEPKcm envR_ReleaseObject envR_ContinueUnwind envR_registerRoutines 
-envR_useDynamicSymbols env5_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEED2Ev  env_ZdlPv envR_GetCCallable envRf_lang1  envCDR  envCAR  envRf_allocVector env	Rf_mkChar  envSET_STRING_ELT envSET_VECTOR_ELT env
-Rf_findFun envTYPEOF  env	Rf_length  envmalloc  envR_MakeUnwindCont env
-saveSetjmp envgetTempRet0 envR_PreserveObject env__cxa_allocate_exception  env__cxa_free_exception envR_UnwindProtect 
-envfree env__cxa_throw env
-testSetjmp env__wasm_longjmp envRf_inherits env
-VECTOR_ELT env	Rf_nthcdr env__ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE25__init_copy_ctor_externalEPKcm env5_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEEC2Ev  env_ZNSt3__28ios_base4initEPv envR_FlushConsole envRprintf envREprintf envRf_coerceVector envRf_type2char  env_ZNSt9exceptionD2Ev  envI_ZNKSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEE3strEv envJ_ZNSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev  envJ_ZNSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev env8_ZNSt3__29basic_iosIcNS_11char_traitsIcEEE7copyfmtERKS3_ env:_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEE5writeEPKcl env_ZNKSt3__28ios_base6getlocEv env_ZNSt3__26localeD1Ev  env%_ZNKSt3__26locale9use_facetERNS0_2idE env=_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEE6sentryC1ERS3_ env:_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEE6sentryD1Ev  env7_ZNSt3__28ios_base33__set_badbit_and_consider_rethrowEv envI_ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE6__initEmc env_ZNSt3__28ios_base5clearEj env5_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEPKv envF_ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev  env	PRINTNAME  envRf_ScalarString  env__cxa_atexit envK_ZNSt3__212basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE9push_backEc env3_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEj envRf_translateCharUTF8  envRf_mkCharCE env
-Rf_xlength  envRf_mkCharLenCE env3_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEElsEi envGetRNGstate env
-STRING_ELT envRf_isString  envR_CHAR  envsnprintf envRf_error envemscripten_run_script_int  env__stack_pointerenv__memory_base env__table_base GOT.mem
-R_NilValueGOT.mem__wasm_lpad_contextGOT.mem	R_BaseEnvGOT.memR_GlobalEnvGOT.memR_ClassSymbolGOT.memR_NamesSymbolGOT.memI_ZTVNSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEEGOT.memI_ZTTNSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEEEGOT.memE_ZTVNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEEEGOT.mem_ZNSt3__25ctypeIcE2idEGOT.mem_ZTISt9exceptionGOT.mem%_ZTVN10__cxxabiv117__class_type_infoEGOT.mem(_ZTVN10__cxxabiv120__si_class_type_infoEGOT.func_httpuv_base64encodeGOT.func_httpuv_encodeURIGOT.func_httpuv_encodeURIComponentGOT.func_httpuv_decodeURIGOT.func_httpuv_decodeURIComponentGOT.func_httpuv_wsconn_addressGOT.func_httpuv_getRNGStateGOT.mem2_ZTINSt3__213basic_ostreamIcNS_11char_traitsIcEEEEGOT.func3_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEED1EvGOT.func3_ZNSt3__213basic_ostreamIcNS_11char_traitsIcEEED0EvGOT.func;_ZTv0_n12_NSt3__213basic_ostreamIcNS_11char_traitsIcEEED1EvGOT.func;_ZTv0_n12_NSt3__213basic_ostreamIcNS_11char_traitsIcEEED0EvGOT.func5_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEED2EvGOT.funcE_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE5imbueERKNS_6localeEGOT.func<_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE6setbufEPclGOT.funcQ_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE7seekoffExNS_8ios_base7seekdirEjGOT.funcS_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE7seekposENS_4fposI11__mbstate_tEEjGOT.func=_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE9showmanycEvGOT.func<_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE6xsgetnEPclGOT.func=_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE9underflowEvGOT.func9_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE5uflowEvGOT.func=_ZNSt3__215basic_streambufIcNS_11char_traitsIcEEE9pbackfailEiGOT.mem4_ZTINSt3__215basic_streambufIcNS_11char_traitsIcEEEEGOT.mem
-R_NaStringenv__cpp_exception env__c_longjmp envmemory env__indirect_function_tablep #}|                   	     	    	          	 	
-
-Î__wasm_call_ctors Z__wasm_apply_data_relocs [_httpuv_base64encode d_httpuv_encodeURI v_httpuv_encodeURIComponent x_httpuv_decodeURI y_httpuv_decodeURIComponent z_httpuv_wsconn_address {_httpuv_getRNGState }R_init_httpuv ~J_ZNSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED1Ev ¥J_ZNSt3__219basic_ostringstreamIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev «F_ZNSt3__215basic_stringbufIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev »	G ##‹¢¨©¶^bĞÏ_€cƒ‚„™š›œ™šœ¦§¸§ÌÍÀÁÃ
-™’|w#" A€j\#"AjA   K  Aôja AjA   K#" Aàj\#"A jA   K  AÔja A!jA   K  AÈj  Aäjn A"jA   KË##AÀj"6##AÈj" 6##AĞj"6##6 # 6<#A@k  6 # 6D##6H# 6d#  6h# 6l##6p# 6Œ#  6# 6”##6˜# 6´#  6¸# 6¼##6À# 6Ü#  6à# 6ä##6è# 6„#  6ˆ# 6Œ##6 #Aj"6 #AÄj#A¸j6    6 #AÌj#Aßj6  #Aj"6 #AÔj#Aúj6 #AØj#6 #Aàj#A„	j6 #Aäj#6 #Aìj#AÏ
-j6 #Ağj#6 #Aøj#A¥j6 #Aüj#6 #A„j#Aá
-j6 #Aˆj#6 #Aj#AÀj6 #A”j#6 #Aœj#Aƒj6 #A j#6 #A¨j#Aj6 #A¬j#6 #A´j#A¡j6 #A¸j#Aj6 #AÀj#A¸j6 #AÄj#A	j6 #Aàj#A¸j" 6 #Aäj"#A
-j6 #Aèj#Aj6 #Aôj  6 #Aøj"#Aj6 #Aüj#Aj6 #A€j 6 #A„j#Aœj"6 #Aˆj#A°j"6 #AŒj 6 #A˜j#6  #6 #A j#6 #A¬j#6  #6 #A´j#6    6 #A¼j#AŒj6 #AÀj#6 #AÌj#A¤j" 6 #AĞj"#Aj6 #AÔj#Aj6 #Aàj  6 #Aäj"#Aj6 #Aèj#Aj6 #Aìj 6 #Ağj#Aˆj"6 #Aôj#Aœj"6 #Aøj 6 #A„j#6  #6 #AŒj#6 #A˜j#6  #6 #A j#6    6 #A¨j#A£j6 #A¬j#6 #A´j#Ağj" 6 #A¸j#6 #A¼j#Aj6 #AÀj#6 #AÄj#6 #AÈj#6 #AÌj# 6 #AĞj#Aj6 #AÔj#!6 #AØj#"6 #AÜj##6 #Aàj#$6 #Aäj#%6 #Aèj#Aj6 #Aìj#Aj6    6 #Aôj#Aºj6 #Aøj#&6 #A€j#A¼j" 6 #A„j#6 #Aˆj#Aj6 #AŒj#6 #Aj#6 #A”j#6 #A˜j# 6 #Aœj#Aj6 #A j#!6 #A¤j#"6 #A¨j##6 #A¬j#$6 #A°j#%6 #A´j#Aj6 #A¸j#Aj6    6 #AÀj#AÔj6 #AÄj#&6 #AÈj"  6 #AÌj#Aîj6 #AĞj#6 #AØj  6 #AÜj#Aj6 #Aàj#Aj6 #Aäj#Aj6 #Aìj 6 #Ağj#Aj6 #Aôj#Aj6 #Aøj#Aj6    A„A¸AØÒD   ( "6    Ak( j (6     ( Ak( j" 3 B€€€€p7H   #A€j_   #A€j`" A$j  4   ( "6    Ak( j (6   Aj   Aj    AğA„AÄÒ #Aôjc   #Aìj`" A$j  ş# A0k"$ #Aìj-  E@#"A“j! AìjA:   Aèj 6  #( "6,  6(@@e@ Aj"  f@ Aj! (! ( Âj!# Ak" $  A 6 B 7 @@@@A !A !  F @ AG@  F@A !  Aj! -  ! Aj!  Aj j :   Aj! EA !  #Ağj"  - Avj-  : 	     - AtA0q  - Avrj-  : 
-   AL@  A=: A=  #Ağj"  - AtA<q  - Avrj-  : A= AF   - A?q j-  : @ AK   A	j j,  L Aj!    Aj$   $  	  @  g6 A(j Ajh $  Aj	  $  Aji	  $ j	  $  A(ji@	 !  $ #"A 6  #6  @@@@ ("AF@  @ AF@  ( !  AG@  k!  $ @ $ 	 	    lA   ! @ AF@@  m!  $ @ $ 	 	  @ Aj#AÅjn!@ o!  $  	  $ @ $ 	 	  #!#Aèj(   
- ( A#( !   Aj ((!  Ajij A(ji A0j$   Q@#A¤j-  Aq@#A j( ! #"Aj AÛj!  A¤jA:   A j  6    =# Ak"$ @@ Aj !   Ÿ $  i	  i Aj$ H# Ak"$  AAp"6@ A   • $  Ajq	  Ajq Aj$  `# Ak"$   ( p"6@   ( G@   6   (r    ( ”6 $  Ajq	  Ajq Aj$ 0# !@  (r $ 	   #"( 6    ( 6`# !@@#A´j-  Aq@#A°j( ! #"Aj AÎj!  A´jA:   A°j  6     $ 	 Ğ# Ak"$ @  ("  ("F@#( ˆ# ! A„j"#"( 6  ( ! A 6  6@ A  kAm’ $  i	  (!  (!  (! A 6€  6|@ Ağ j!# A k"$   (|6  (€6# Ak"$   (6  (6# Ak"	$  	 (6 	 (6# A k"$   	)7 !
- Aj!@  
-G@  
-•–  (Aj6 
-Aj!
-  6  ( 6  (6 (!  )7    kAmAlj6 A j$  	Aj$  Aj$   (6   (6 A j$  AĞ j#Aîjn!@  AÜ j "6h #"A·j6l A6D@ A,j Aéjn!@  A8j "6H  AÄ j6L@ Aj#AÜjn!@ Aj !  6(  6$@  Aè j AÈ j A$j $  	  $  	  $  	  $  	  $  	  $  	       @ AÜ j#Ašjn!@ AĞ j Ağ j ‘#AÃ	j“ $  	   (pˆ $  Ağ ji	  $  i	  Ağ ji i Aj$     - s   t@  u!         As       ú# Ak"$    (     , A Hp"6@ #AÇj 
-p"6@   (     , A Hp" 6@  #( p"6 @  #( #A½j  #A˜j  $ @ q	  $ @ Ajq	  $ @ Ajq	  $  Ajq	  q Ajq Ajq Ajq Aj$      #( G@    #   ( #( G@# ! @A  $ 	 R@#A¬j-  Aq@#A¨j( !#"Aj Aøj! A¬jA:   A¨j 6     œ# A k"$ @@ Aj! Aj  ( Ak( (n!@#A¼j-  Aq@#A¸j( !#"Aj Aój! A¼jA:   A¸j 6      $  	  @@ Aj!    ( (  !    n! A 6@@ @ Aj" …†!  @#AÄj-  Aq@#AÀj( ! #"Aj A®	j!  AÄjA:   AÀj  6    †! #( " ! Aj"      Aj!# Ak" $   AAp"6@ A  (   , A H A#AÓj A#AÁj A#A˜j  $   Ajq	   Ajq  Aj$  †‡†! #( ˆ $  Aj‰ 	  $  Aj	  Aj‰  Aj A j$   (@  #AÃj.E    AG   !AF!    A /   AğA(A AôÕ{# Ak"$ @@ Aj ¼!# !  #"( 6  ( !  A 6   6@   G@   ( ’ $   i	  $  i	  i Aj$    AøAĞ AAüÕ   A€Aø A A„Ô   AˆA AAŒÔÎ# A0k"$ #A”j-  E@#"A“j! A”jA:   Aj 6  #( "6,  6(@@e@ Aj"  |@ Aj!# Ak"$  Aj¤" ( Ak( j"   (AµqAr6@ #A¡jº! @ (" ( ÂAtj"F   !@  ( R Aj" F  #A¶jº!    Aj: $  ;	  ; Aj$ @  g6  A(j A jh $  Aj	  $  Aji	  $ j	  $  A(ji@	 !  $ #"A 6  #AÈj6  @@@@ ("AF@  @ AF@  ( !  AG@  k!  $ @ $ 	 	    lA   ! @ AF@@  m!  $ @ $ 	 	  @ Aj#AÅjn!@ o!  $  	  $ @ $ 	 	  #!#Aj(   
- ( A#( !   Aj Aji ((! j A(ji A0j$   =# Ak"$ @@ Aj ¿!   Ÿ $  i	  i Aj$ ›# Ak"$ #Aœj-  E@#" A“j!  AœjA:    A˜j 6 @@e@S $ j	  !  $ #"A 6  #Ağj6  @@@@ ("AF@  @ AF@  ( !  AG@  k!  $ @ $ 	 	    lA   ! @ AF@@  m!  $ @ $ 	 	  @ #AÅjn!@ o!  $  	  $ @ $ 	 	  #!#A˜j(   
- ( A#( ! #( ! j Aj$      A #AàjA A   A      ( Ak( j_   _     ( Ak( j€     ( Ak( jc   c     ( Ak( jƒú# Ak"$  #A jp"6@  #( Šp"6 !@@ ! @  #( F  ! # Ak"$ #"A j!  A˜j#( p"6@@ Ašj!#Aˆj!	   A !AG  !AG  A  G  A 	G  AA G  AA#( G  A G  A!  $  Ajq	    F! Ajq Aj$    "! ! $ @ Ajq	  $  Ajq	  Ajq Ajq Aj$    #( G@    ( Aj6  pÕ# Ak"$  AAp"6@ A   (     , A H A  A  AAp" 6@  A #Aüj  A#A¾j  A#AÙj #(    #(   $ @ Ajq	  $  Ajq	  Ajq Ajq Aj$  S@#AÌj-  Aq@#AÈj( !#"Aj A™	j! AÌjA:   AÈj 6      !# !@  (  $ 	   A 6 *# Ak"$   6   6 AjŒ Aj$    (   (ƒ
-#!
-# A k"! $ A(""A 6 A!	A!@@ 	AG@ A k""$  Ak""$   6  6  6  6  6#!  6  6  6  6  6  p"6 A !@ A  $!%!@@ @ &@@A'!  6  t@  ( u6  $  (	   
-  #Aj  )  6  6  6  6  6@ q@ * A j$  #AÈjA + $   6  6  6  6  6 q  6  6  6  6  6	 ! $  (! ( "(  ( (,"	@ (! (! (! (! (! (*  -  %   ! J@ E@     0#(   @  A- 4  , A N@   ) 7    (6     (  (1  ¯# A0k"$  A6 # !  #"( 6  ( !  A 6   6@  A ( ’ $   i	 @ AAp"6,  (!	 A 6(  	6$@# Ak"$   ($6  ((6# Ak"$   (6  (6 Aj ("@ #( — A  ( "(   , A H Aj$  Aj$  A6   	6# Ak"$   (6  ( 6# Ak"$   (6  (6 (# Ak"$  AAp"6( !
-@ ˜! $  Ajq	   
-6  Ajq Aj$  Aj — A ( "(   , A H Aj$  Aj$  A6  	6# Ak"$   (6  (6# Ak"$   (6  (6 Aj (( — A ( "(   , A H Aj$  Aj$  #Aªjn!@ Aj   ‘ “ $  	  $ @ A,jq	  $   i	   A,jq A0j$ "    6    (   , A H6  /    ( G@   6   (r    ( ”6    6Q# Ak"$   (!  ( ( !   p"6@     $  Ajq	  Ajq Aj$    AĞAÔAáÑ   (     , A H   ( (   (    ( (   (    AØAÜAµÑ    4A , # Ak" $    6   6 #A°j  5  Aj$  G# Ak"$ A! AG@  : A    AjA  ( (0 AG! Aj$  , # Ak" $    6   6 #A°j  6  Aj$      AÓI# !  #"( 6  ( !  A 6   6@   G@   (   $   i	 5    ( G@   6   (r    ( ”6    ( ˜6.# !  #AÜj6 @  Aj   £ $ 	      #AÜj6   Aj  9¡# Ak"$ @@ Aj¤!# A k"$  #"Aj"6  Aj"6  6  6  6  6 A6  Aj6    ª A j$    Aj: $  ;	  ; Aj$ “# !  #	"A j68   Aj6   A8j!@  #
-Aj  Aj" ]"#	"Aj6   A j6 @  2" B 7   #Aj6   A60  B 7( $  #
-Aj 	  $  	     #
-<" A8j  	   ¢   (  Aj  , A H ¹w @ Ak-  Ağ F@   ( G ( ! A N@A ! A  A J!@@     G  j-    > Aj!     º     (  (¬4   ( "6    Ak( j (6   AjH   Aj ’
-# A k"$     ( Ak( j"(!
- (! (! ­! Aj!	@@@@  6œ  L@   ®-  E@@ Aj#A£jn! ¯ $  	     ®! A : › A6”   A›j A”j   Aœj °!@  (œ"L@@@ Aj#AÛjn!   ¯ $   	    Alj!@ - ›E@      (”±@@@ Aj¤! ( Ak(  j    ( Ak( j= 	 ( Ak( j" ( A€r6      (”±  	:A ! ( - " ÀA H!@  F@@   (   - "ÀA H" (  · $  	   (   , A H j"-  A+F@ A :   Aj!   $  ;	   ; (œAj!       ( Ak"( j 6   ( j 6   ( j 
-6   ( j ² A j$    (L"AF@    ³"6L ÀZ !@@@ ,  "A%G@      k>     k> - A%G Aj"! Aj! ƒ# !@@A '!  (     , A H!# !  #Ağj6 @ Aj n  $  9	  B 7 A:  A 6 !  $  (	   #AĞj#Aj+ ƒ# Ak"$ @@ -  A%G@@@ Aj#Aßjn!   ¯ $   	      ( Ak"( jA 6   ( jA6   ( jA ²    ( "Ak( j" (A€à~q6  Aj!
-@ Ak!@@  Aj"6 @@@@@ , "	A+k @ 	A k  
- ( j" ( A€r6  ! !   ( j"- A q A0² 
-  ( "Ak( j" ( AÏ~qAr6    ( jA ² 
-  ( "Ak( j" ( AÏ~qA r6  ! ! 
- ( j- Aq A:   
- ( j" ( A€r6  A :  A! ! 	A0kAÿq"A	M@   Ak( j ´6 ( "-  !	 	AÿqA*G@ A
-I@@  ( "L@@@ Aj#Aâjn! ¯ $  	    Aj6   Aljµ!  ( ! A N   Ak( jA ²    ( "Ak( j" (AÏ~qA r6A  k!   ( !A !   Ak( j 6  ( "Aj"6  - !	A!
- 	AÿqA.F@  Aj6 @@ - "A*F@  Aj6   ( "J@  Aj6   Aljµ!@@ Aj#A‚jn! ¯ $  	   A0kAÿqA	M@ ´!A ! A-G  Aj6  ´ A !    ( Ak( j 6 ( !@@@@@@@@@@@@@@@@@@@@@ -  "Aè k"AMA A tA• q AÌ Fr@  Aj"6 @A! À"Aá k @ AÁ k	  E AØ G    ( Ak( j" (A€€r6A!  ( !  ( !  ( !    ( "Ak( j" (A€€r6   Ak"( j" (Aû}qA€r6   ( j"   (AµqAr6    ( "Ak( j" (A€€r6   Ak( j"   (Aû}qAr6    ( "Ak( j" (A€€r6   Ak"( j" (AµqAr6   ( j"   (Aû}q6	@@ Aj#AÔ	jn!   ¯ $   	    ( ! 	AÿqA.F@    Ak( j(6    Ak( j"   (Ar6@@ Aj#A‘
-jn! 
-  ¯ $   	  @@ Aj#Ajn! 	  ¯ $   	  AÀ !    ( Ak"( j" (Aµq r6 
- 	AÿqA.Gr   ( j" ( j6   ( j" (AÏ~qAr6   ( jA0²   ( !     ( Aj!   Aj$  ™# Ak"$   ( E@@@ Aj#A¾
-jn! ¯ $  	    ("E@@@ Aj#A¾
-jn! ¯ $  	    (!      (    Aj$    (LAF@  ³   6LR# Ak"$  Aj"  ?@ #A" A   ( ( !  $  Aj@	  Aj@ Aj$   @  ( !@ -  "A0kAÿqA	KE@   Aj"6  A
-l jA0k! ‘# Ak"$   ( E@@@ Aj#A¾
-jn! ¯ $  	    ("E@@@ Aj#A¾
-jn! ¯ $  	    (!  (     Aj$ ‚  #Ağj6 # Ak"$    Aj6@ ("( @ ( ! (!@  G@ Ak!  6 ((  $ 	  Aj$   Aj  9³
-# Ak"$ @@@ Aj  B"
--  E     ( Ak( j"(! (!@ ­!  "j"  A°qA F!	 !A !# Ak"$ @ "E  (! 	 k"A J@    ( (0  G   k"kA   H"A J@ Aj"  E@  (  , A H  ( (0 ! $  Aj	  Aj  G  	k"A J@  	  ( (0  G A 6 ! Aj$      ( Ak( j" (ArF $  
-C	   $ @    ( Ak( jD $ @ $ 	 	  
-C Aj$   	   ¶B# Ak" $ @@  Aj#A¢jn! ¯  $  	    Aj$ A      ·   #Aj6   A j  v# Ak"$   #"( 6  ( !  A 6   6@  p"6@   ½’ $ @ Ajq	  $   i	  Ajq Aj$   ·   AG@# Ak"$ @@@@@@@@   "Ak  AG #AÜj  
-p" 6@  #( Šp!  $  Ajq	    IJ! A'! A: @   !  A:    86 # !  #AÜj6 @ Aj#"Açj ¾  $ 	  A :   AÈj#Aj+ $  - @ (	    J!     6 Ajq Ajq Aj$   ‹# Ak"$ @@ Aj¤!# A k"$  #"Aj6  Aj6  6 A6  Aj6   Ajª A j$    Aj: $  ;	  ; Aj$     AÓ #Aàj_ #AÔjc	   ( P #AÈj‰# Ak"$  Aj¤" ( Ak"( j" (AµqAr6  ( j" (A€€r6 ( "  , "A H!@@@   ÀA H" ( Aÿq j F@   Aj: ; Aj$  !@@ ,  "A0kAÿqA
-I A_qAÁ kAÿqAIr  A!k"AM@A t"A¨˜°}q AÁç q Aß F Aş Fr AA ! E@  Å A%Å"( Ak(  jA6 A0:   ( Ak( j , ²  -  M $  ;	  Aj! ( ! - !  '# Ak"$   :    AjA· Aj$ Ù# !  #"( 6  ( !  A 6   6@  A ( ’# A k"$   (! A 6  6   Â6  6  ( 6# Ak"$   (6  (6  (6   (6# Ak"$   (6  ("6 ( k!# Ak"$   (6  (6 Aj!@ A J@  (–  (Aj6 Ak!  ( 6   (6 Aj$  Aj$  Aj$  A j$  $   i	      ( (   (T'A!  A0k" A6M#Aˆj  Atj( AÑ# Ak"$  Aj¤! ( "  , "A H!@@@   ÀA H" ( Aÿq j" F@   Aj: ; Aj$  -  !  AkK@  ÀÅ ! A%F@ Aj! , "È" , "	È"rA H@ A%Å Å 	Å At r!@   ÀA$k"AKA tA…“€ÖqEr  A%Å Å 	Å  ÀÅ  ÀÅ ! $  ;	  Aj! ( ! - !  ã  # Ak"$ @  A	G@ U@ !AFA'!  A: @  ! A:   86 A:   !6# !  #AÜj6 @  Aj#"Aj Aj AjË $ 	  A :    AÈj#Aj+ $  - @  (	   ½A T V Aj$  n£# Ak"$ @@ Aj¤!# A k"$  #"Aj6  Aj6  6  Aj6  Aj6  6 A6  Aj6    ª A j$    Aj: $  ;	  ; Aj$    ( > @ Ak-  Aã F@   ,  Å A N@    Î   ( R˜# A k"$ @@ Aj¤!  ( R Aj" Aj:@   (  - " ÀA H" (   "     H> $  Aj	  $  ;	  Aj ; A j$ e# Ak"$   6  6  6   6 #" AàjA€  Aó
-j WA€O@#AéjA X #AàjY#(  Aj$ W# Ak"$   6   6 #" AàjA€  Aój WA€O@#AéjA X #AàjY#(  Aj$ M@# j-  Aq@# j( !#"Aj  j!  jA:    j 6      †# !  #" j"A j6$   Aj6   A$j!@    j  Aj" ]"# j"Aj6   A j6 @#!  2  j6  $  # j 	  $  	 ·# Ak"$   #"( 6  ( !  A 6   6@  p"6@     G# Ak"$ @   G@  "AKA tA€ÈƒqEr  7! Aj$  A'! A: @  ! A:   86 A:   86 #"A­j Aj Aj¡ A :  AÈj#Aj+ $  - @ (	     $ @ Ajq	  $   i	  Ajq Aj$   Á# A0k"$ # j-  E@#"A“j!  jA:    j 6  #( "6,  6(@@e@ Aj"  w@ Aj# A k"$   Â6 Aj#'Æ!
-@@@@@ Â 	J@ (!   	6   6#'(  Aj"ÇF (!   	6   6  Aj"  ÇÊ@    É $  Aj	   A j$  Aj@ ( Aj , "A H"  ( Aÿq  AQ! 
-(!   	6   6   – $  Aj	  $  
-i	  Aj 	Aj!	  (6 @ A(j A jh $  Aji	  $  Aji	  $ j	  $  A(ji@	 ! $ #" A 6   # j6 @@@@  ("AF@ @ AF@ ( !  AG@ k!  $ @ $ 	 	    lA  ! @ AF@@  m!  $ @ $ 	 	  @ Aj#AÅjn!@ o!  $  	  $ @ $ 	 	  #!# j(   
- ( A#( !   Aji Aji ((! j A(ji A0j$   ª# A0k"$ # j-  E@#"A“j!  jA:    j 6  #( "6,  6(@@e@ Aj"  w@ Aj# A k"$   Â6 Aj#'Æ!
-@@@@@ Â 	J@ (!   	6   6#'(  Aj"ÇF (!   	6   6  Aj ÇNn! @    Ä $   	   A j$   @ ( Aj , A HAO! 
-(!   	6   6   – $  Aj	  $  
-i	  Aj 	Aj!	  (6 @ A(j A jh $  Aji	  $  Aji	  $ j	  $  A(ji@	 ! $ #" A 6   # j6 @@@@  ("AF@ @ AF@ ( !  AG@ k!  $ @ $ 	 	    lA  ! @ AF@@  m!  $ @ $ 	 	  @ Aj#AÅjn!@ o!  $  	  $ @ $ 	 	  #!# j(   
- ( A#( !   Aji Aji ((! j A(ji A0j$   ç- #à-ÿ % 	 }}}}   @
-  H
-  P
-          ÿ % 	 }}}}   @
-  H
-  P
-          ÿ % 	 }}}}   @
-  H
-  P
-          ÿ % 	 }}}}   @
-  H
-  P
-          ÿ % 	 }}}}   @
-  H
-  P
-          ÿ % 	 }}}}   @
-  H
-  P
-          ÿ % 	 }}}}   @
-  H
-  P
-          identity h0x _httpuv_encodeURIComponent _httpuv_decodeURIComponent tinyformat: Not enough format arguments _httpuv_wsconn_address class sys.calls names %.*s dataptr try-error simpleError C++Error as.character problem writing JS exec buffer evalq Rcpp stop condition tinyformat: Cannot convert from argument type to integer for use as variable width or precision tinyformat: Not enough arguments to read variable precision call Rcpp:longjumpSentinel cppstack tinyformat: Not enough arguments to read variable width tryCatch tinyformat: Too many conversion specifiers in format string tinyformat: Not enough conversion specifiers in format string tinyformat: Conversion spec incorrectly terminated by end of string Rcpp_precious_preserve Rcpp_precious_remove _httpuv_getRNGState writeHttpuvTcpResponse writeHttpuvWSResponse exitRNGScope enterRNGScope line file demangle message _httpuv_base64encode rcpp_set_stack_trace rcpp_get_stack_trace Rcpp_stack_trace tinyformat: the %a and %A conversion specs are not supported tinyformat: %n conversion spec not supported Assertion failed _httpuv_encodeURI _httpuv_decodeURI let handle = RObject.wrap(%d).toNumber();let binary = RObject.wrap(%d).toBoolean();let type = RObject.wrap(%d).toString();let message = RObject.wrap(%d).toString();chan.write({  type: '_webR_httpuv_WSResponse',  data: { handle, binary, type, message },}); let req = RObject.wrap(%d);let resp = RObject.wrap(%d).toObject({ depth: 0 });let uuid = req.get('UUID').toString();chan.write(  { type: '_webR_httpuv_TcpResponse', uuid, data: resp }); Not compatible with requested type: [type=%s; target=%s]. Not compatible with STRSXP: [type=%s]. Expecting a single string value: [type=%s; extent=%i]. c++ exception (unknown reason) ;,/?:@&=+$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_.!~*'()   N4Rcpp8internal20InterruptedExceptionE N4Rcpp17LongjumpExceptionE N4Rcpp9exceptionE N4Rcpp8RostreamILb1EEE N4Rcpp8RostreamILb0EEE N4Rcpp10RstreambufILb1EEE N4Rcpp10RstreambufILb0EEE N4Rcpp14not_compatibleE                               	   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
-                  ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
-                              ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/                    8      _      z          „         O         %         a         @         ƒ                   !        8  	                  $       8  
-      ÜÿÿÿÜÿÿÿ8        ä
-    0  ø
-  $                   ÜÿÿÿÜÿÿÿ                Œ      $       ¤        ÜÿÿÿÜÿÿÿ¤        P  ˆ  œ  d  $                   ÜÿÿÿÜÿÿÿ                £          ğ                                                          º          <                                                          Ô          î          H               P
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @target_features+mutable-globals+sign-ext+exception-handling

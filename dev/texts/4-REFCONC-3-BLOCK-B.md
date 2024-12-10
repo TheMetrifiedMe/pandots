@@ -1,0 +1,4 @@
+## Gini Coefficient
+The second figure shows the Gini-Coefficient of the same citation distributions as of the HHI. In contrast to the HHI which focuses on concentration, the Gini index looks at inequality. Usually, it would be very sensitive to items that receive zero citations. These are, however, not included in this set because the data is based on reference lists of citing articles. 
+
+We can see the same pattern for all types: citations done by Covid-19 related items are unequally distributed in the second quarter of 2020. Over the course of the following years, they become more dispersed so that the Gini is decreasing. Notably, the inequaltiy is always much higher when the cited item is itself about the pandemic (blue line) which indicates that there is a substantial amount of Covid-19 related publications that received only a little amount of citation.
