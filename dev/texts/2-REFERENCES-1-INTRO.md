@@ -1,3 +1,4 @@
-# Overview over references of corona-related research
-This tab teaches us some basics about the reference lists of the publications. Publications have reference list to show on what previous works they are based. The type and amount of references a publication has tells us something about the evidence-based that is behind the claims of a research article.
-The green line...
+# Overview over references of Covid-19 related research
+What was the evidence base of Covid-19 related research by their genre? This page shows us the basics about reference lists of biomedical publications. Such reference lists show which and how much previous publications influenced the current project.
+
+## Average Number of References per month

@@ -1,4 +1,5 @@
 # Genres among references
-The following figures consider all references of Covid-19 related research and provide a look at the the different genres among those references. 
+What was the evidence base of research on Covid-19 in terms of document types? Have researchers had to rely mostly on unreviewed preprints? As on the previous page, reference lists are looked at again here. This time, however, the genre compositions among the references are considered. This way, one can see to which amount preprints or reviews influenced the Covid-19 related research that was published each month. For a more nuanced understanding, reference lists were cut in two, separating Covid-19 related sources from unrelated ones. 
 
-The values reveal the portions of each genre group, so that the lines represent their dynamics.
+## Genres in the Covid-19 evidence base
+

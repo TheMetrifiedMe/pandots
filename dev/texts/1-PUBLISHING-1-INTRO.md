@@ -1,4 +1,4 @@
 # The pandemic publication output 
-This tab shows the publication output of medical research during the Covid-19 pandemic by its Covid-19  relatedness (first and second panel) and document type groups (colors)
+What type of documents were published during the Covid-19 pandemic and especially in the beginning of 2020? This page shows the portions of the different publication genres among the monthly publication outputs.
 
-This tab shows...
+## Covid-19 related research

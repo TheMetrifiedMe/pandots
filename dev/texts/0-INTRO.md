@@ -8,21 +8,17 @@
 
 The urgency of the COVID-19 pandemic prompted a swift and robust response from the scientific community, especially in the medical fields. This lead to significant shifts in traditional publishing practices and a reconfiguration of the genre economy in science. For example, one of the most notable developments during this period was the unprecedented rise of preprints as a primary vehicle for disseminating COVID-19-related research ([Fraser et al. 2021](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000959)). Preprints, which are research papers shared publicly before undergoing formal peer review, became a critical resource for researchers, journalists, and policymakers alike. While they offered rapid and open access to the latest scientific findings, their lack of peer review meant that their conclusions had to be interpreted with caution, particularly by non-experts ([Simons and Schniedermann 2023](https://www.degruyter.com/document/doi/10.1515/9783110776546-003/html?lang=de)). While the pandemic rise of preprints has been covered in several bibliometric analyses, no studies so far have provided a holistic overview over the different document types in medical research during the Covid-19 outbreak. 
 
-But studies from the history and sociology suggest that genre dynamics play an important role for the dynamics of scholarly communication. For example, scholars suggested how scientific results travel from papers to textbooks when becoming accpeted facts (Fleck 1981[1935]](https://press.uchicago.edu/ucp/books/book/chicago/G/bo25676016.html)). They showed how review articles employ a writing style that suggests scientific consensus and empirical wealth ([Myers 1991](https://wac.colostate.edu/books/landmarks/textual-dynamics/)). Further, genre systems and the interrelations of different represent and manifest the social intentions and thereby shape the expectations and actions of community members ([Bazerman 1994](https://www.taylorfrancis.com/chapters/mono/10.4324/9780203393277-14/systems-genres-enactment-social-intentions-aviva-freedman-peter-medway?context=ubx&refId=bfead445-1ade-44a3-98ab-63ec4ef75f5b)). In this regard, some genres are crucial in defining scholarly communication in biomediciene. Especially genres like systematic reviews are considered as the most reliable source of evidence that aggregates multiple, maybe conflicting, study results into a final take on any topic or research question ([Schniedermann et al. 2022](https://www.taylorfrancis.com/chapters/oa-edit/10.4324/9781003188612-8/top-hierarchy-guidelines-shape-systematic-reviewing-biomedicine-alexander-schniedermann-clemens-bl%C3%BCmel-arno-simons)). 
+But studies from the history and sociology suggest that genre dynamics play an important role for the dynamics of scholarly communication. For example, scholars suggested how scientific results travel from papers to textbooks when becoming accpeted facts ([Fleck 1981 (1935)](https://press.uchicago.edu/ucp/books/book/chicago/G/bo25676016.html)). They showed how review articles employ a writing style that suggests scientific consensus and empirical wealth ([Myers 1991](https://wac.colostate.edu/books/landmarks/textual-dynamics/)). Further, genre systems and the interrelations of different represent and manifest the social intentions and thereby shape the expectations and actions of community members ([Bazerman 1994](https://www.taylorfrancis.com/chapters/mono/10.4324/9780203393277-14/systems-genres-enactment-social-intentions-aviva-freedman-peter-medway?context=ubx&refId=bfead445-1ade-44a3-98ab-63ec4ef75f5b)). In this regard, some genres are crucial in defining scholarly communication in biomediciene. Especially genres like systematic reviews are considered as the most reliable source of evidence that aggregates multiple, maybe conflicting, study results into a final take on any topic or research question ([Schniedermann et al. 2022](https://www.taylorfrancis.com/chapters/oa-edit/10.4324/9781003188612-8/top-hierarchy-guidelines-shape-systematic-reviewing-biomedicine-alexander-schniedermann-clemens-bl%C3%BCmel-arno-simons)). 
 
 Against this background, we ask how the Covid-19 pandemic has impacted on the genre system and genre dynamics of the biomedical research sector. Which genres were produced at which stage of the pandemic? Which genres were cited and used as evidence-base for other pandemic research sutides? Have some genres played a more central role? These questions shall be adressed in an exploratory manner. This is done by conducting a comprehensive and exploratory bibliometric analysis of the evolving genre economy within the COVID-19 evidence base. We assume that the roles and interactions among these genre categories developed and shifted, reflecting the changing needs and priorities of the scientific community during the pandemic. 
 
 
-# Data
+# Data and methods
 
-Our primary dataset consists of medical publications indexed in PubMed and OpenAlex, each assigned a PubMed identifier (PMID). In early 2024, we retrieved the complete metadata record from PubMed as of its December 2023 version. Since January 2020, marking the onset of the pandemic, this dataset has included <span style="color:red">5.82 million</span> unique items that are either Problems (Editorials, Letters, News), Articles (Case Reports, Randomized Controlled Trials, Journal Aricles) or Syntheses (Reviews, Cochrane Reviews, Systematic Reviews). Because PubMed does not index preprint articles and only includes citation links to other PubMed items, we matched the dataset with the February 2024 snapshot of OpenAlex, provided by the German Competence Network Bibliometrics. During the matching there was a 5.7% loss of the original items while <span style="color:red">280k</span> preprints were added. The final dataset comprises of <span style="color:red">5.76 million</span> items.
-
-
+Our primary dataset consists of medical publications indexed in PubMed and OpenAlex, each assigned a PubMed identifier (PMID). In early 2024, we retrieved the complete metadata record from PubMed as of its December 2023 version. Since January 2020, marking the onset of the pandemic, this dataset has included 5.82 million unique items that are either Editorials, Letters, News, Case Reports, Randomized Controlled Trials Journal Aricles, Reviews, Cochrane Reviews, or Systematic Reviews. Because PubMed does not index preprint articles and only includes citation links to other PubMed items, we matched the dataset with the February 2024 snapshot of OpenAlex, provided by the German Competence Network Bibliometrics. During the matching there was a 5.7% loss of the original items while 280k preprints were added. The final dataset comprises of 5.76 million items.
 
 
-<!-- The basic underlying dataset are medical publications indexed in PubMed and assigned a PubMed identifier (PMID). In early 2024, the complete metadata record of PubMed as of December 2023 was retrieved. Since January of 2020, the first year of the pandemic, the set provides x unique PMID's. Since PubMed does not include preprint articles and only indexes citation links to other PubMed items, the database has been matched to OpenAlex in a second step. The OpenAlex snapshot of February 2024 as provided by the [German Competence Network Bibliometrics](https://www.bibliometrie.info) has been used for this purpose. After the matching, the dataset consists of x items. -->
-
-**Preprints**
+## Preprints
 
 We identified preprints based on their registered source titles in OpenAlex. Unlike the rest of the dataset, only occasionally have a PMID, as they may not be indexed in PubMed. Additionally, preprints outside the medical domain are less comparable to the PubMed set. Therefore, we included in our sample only repositories with at least 15% of their preprints labeled as "Health Sciences" [topics](https://docs.openalex.org/api-entities/topics) in OpenAlex were included in the sample. Note that the full repositories were included, similar to the inclusion of PubMed as a whole. While different strategies were tested, the inclusion of whole repositories provided the best trade-off in favour of keeping most of what is relevant. Applying a topic-based filter on the item level, on the other hand, would have excluded many publications in medicine. For example, publications in radiology are often assigned the topic "physics" but including that topic, most of arXiv records would have been included as well. The covered preprint servers are:
 
@@ -37,21 +33,8 @@ We identified preprints based on their registered source titles in OpenAlex. Unl
 - 'PsyArXiv (OSF Preprints)'
 - 'OSF Preprints (OSF Preprints)'
 
-<!-- Preprints are identified on the basis of registered source titles in OpenAlex. In contrast to the rest of the set, preprints do not necessarily have a PMID as they might not be registered in PubMed at all. In addition, preprints which are not from the medical domain are less comparable to the PubMed Set. For this reason, only those repositories were kept in the sample that have at least 15% of their preprints labeled as "Health Sciences" [topic in Open Alex](https://docs.openalex.org/api-entities/topics). Further details on the selection procedrue can be found in the openalex_exploration gitlab.
 
-Therefore, the list of covered servers are: 
-- 'bioRxiv (Cold Spring Harbor Laboratory)'
-- 'Research Square (Research Square)'
-- 'Europe PMC (PubMed Central)',
-- 'Authorea (Authorea)'
-- 'medRxiv (Cold Spring Harbor Laboratory)',
-- 'Authorea'
-- 'HAL (Le Centre pour la Communication Scientifique Directe)'
-- 'Zenodo (CERN European Organization for Nuclear Research)'
-- 'PsyArXiv (OSF Preprints)'
-- 'OSF Preprints (OSF Preprints)' -->
-
-**Identification of COVID-19 Related Research**
+## Identification of COVID-19 Related Research
 
 We conducted the identification of COVID-19-related publications in two steps. First, we marked any publication assigned a COVID-19-related MeSH term as relevant to COVID-19 (see [NLM 2021](https://www.nlm.nih.gov/pubs/techbull/nd20/nd20_mesh_covid_terms.html)). However, due to the indexing time lag at NLM and the exclusion of preprints from their indexing, a second step was necessary. We then employed a title and abstract-based search system. Titles and abstracts were screened using the following full-text search query in PostgreSQL:
 
@@ -59,9 +42,9 @@ We conducted the identification of COVID-19-related publications in two steps. F
 
 When comparing this approach to the MeSH term-based method, we found that the title and abstract screening achieved an overall precision of 0.9330, a recall of 0.9622, and an F1-Score of 0.9474. Therefore, our title and abstract-based screening proved to be a robust classification approach.
 
-<!-- Whether a publication was about Covid-19 or not was identified in two steps. First, any publication that is assigned a Covid-19 related MeSH term was marked as Covid-19 related (see [NLM 2021](https://www.nlm.nih.gov/pubs/techbull/nd20/nd20_mesh_covid_terms.html) ). However, since there is some indexing time lag at NLM which also not indexes preprints at all, a title and abstract based system has been used in asecond step. Based on the Covid-19 related MeSH terms, titles and abstracts have been screened as well, using the following fulltext search in postgresql: `to_tsquery('english','coronavirus | (corona <-> virus) | covid | (sars <-> cov <-> 2) | sars-cov-2 | sars-cov2 | (sarscov <-> 2) | sarscov-2 | sarscov2 | ncov2019 | (ncov <-> 2019) | ncov-2019 | 2019ncov | (2019 <-> ncov)')`. Evaluating the second against the first approach, an overall precision of 0.9330 , recall of 0.9622 and F1-Score of 0.9474 have been retrieved. Therefore, the title and abstract based screening provided as solid classification approach. -->
 
-**Document Types**
+## Document Types
+
 Document type information was provided by PubMed. The PubMed data features a rich set of 79 different document types which are also multi-assigned. To reduce multi-assignment, we ranked each document type and reduced the classification to the highest ranks. Further, we separated the document types according to their intellectual function into four bigger groups, so that analysis and visualization is more accessible. All document types, their ranks and groupings can be found in [documenttypes.csv](./dev/ac24_documenttypes.csv). The four groups are:
 
 1. **Problems:** (Editorials, letters, and news items) Problems are the scholarly content of journals that is not scientific content per se. We assume that editorials and news are used for the problematization of current trends and development, as well as agenda setting. 
@@ -69,14 +52,13 @@ Document type information was provided by PubMed. The PubMed data features a ric
 3. **Articles:** (Jurnal articles, case reports, clinical trials) Full reportings of peer-reviews research results. Journal articles are the gold standard of scholarly communication.
 4. **Syntheses:** (Systematic reviews, meta-analyses and narrative reviews) Comprehensive summaries of research on specific topics or questions. They represent the scientific consensus or final answer to particular research questions. Syntheses are considered the most reliable evidence base.
 
-
-# Methods
-
-**Citation distributions**  
+## Citation distributions
 
 To analyze the dynamics of citation distributions, we used Hogg's measures of skewness and kurtosis for non-normally distributed data ([Bono et al. 2019](https://www.mdpi.com/2073-8994/12/1/19)). Additionally, we calculated the Herfindahl-Hirschman Index (HHI) to assess the concentration of citations within the evidence base of COVID-19-related research. To facilitate comparisons across different months, we report the HHI as a proportion of the maximum possible HHI for each respective month. The maximum HHI represents a hypothetical scenario where a single article would receive all citations made during that month. Unlike other bibliometric analyses that calculate the HHI based on the concentration of citations to individual articles, we conceptualize all citations made in a given month as the "market" or evidence base for research published during that period. This approach follows the methodology outlined by [Lariviére et al. 2009](https://onlinelibrary.wiley.com/doi/abs/10.1002/asi.21011).
 
-
+# Funding
+This project was funded by the German Federal Ministry for Education and Research (01PU17017) and the
+Competence Network Bibliometrics (01PQ17001).
 
 ## SQL code
 ```sql

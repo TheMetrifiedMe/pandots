@@ -1,4 +1,3 @@
-## Covid-19 related research
 
 The panel shows the monthly output of Covid-19 related publications since January 2020. The dynamics in the overall production of items (grey bars) show how only a negligible amount of items in the set was produced in the first three months, e.g. 80 items in January (0.02%) and 279 in February 2020 (0.07%). But the production rose sharply from March to June, where it lead to the third most productive month of Covid-19 related research. The monthly rate rises until its maximum in month 20 (2.91%) and then steadily decreases to rates below 2% since month 41 (May 2023). All in all, the production of Covid-19 related research starts with a stark hype in its first year and then gradually decreases with progress of the pandemic. 
 
@@ -7,3 +6,5 @@ The production of different genres of Covid-19 related research offers substanti
 The overall trend in the genre dynamics of Covid-19 related research points into the direction of Covid-19 unrelated one: Mostly articles, a tenth of reviews and some shares for the rest. However, especially the 'rest' (*Preprints* & *Problems*) keep around twice the level compared to Covid-19 unrelated research. This indicates how many researchers may have made first experiences with preprinting during the pandemic, and kept this practice in the following. Even for unrelated research, the share of preprints increases slightly. Likewise, *Problems* may keep higher levels because they were not only used for a quick crisis response, but are also used to reflect on how science (and the journals) worked out pandemic publishing.
 
 The rate of *Syntheses* culminates at 14% in month 11 (November 2020) from where it slowly but steadily decreases. The maximum might mark a consolidation point in the crisis response where already thousands of publications are published each month which have to be assessed and evaluated in order to define the scientific consensus on the different topics and guide decision making. 
+
+## Covid-19 unrelated research
