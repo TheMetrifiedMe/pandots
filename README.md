@@ -5,7 +5,7 @@ Authors: Alexander Schniedermann (DZHW Berlin), Arno Simons (TU Berlin)
 
 This repo contains a data dashboard/virtual scientific publication. The research is a bibliometric analysis of <5 million biomedical research publications that were published during the Covid-19 pandemic. The dashboard is realised as shinylive application that is hosted on github (~20 seconds loading time): https://themetrifiedme.github.io/pandots/
 
-Schniedermann, A., Simons, A. (2025). Analysis of Pandemic Document Types (PanDots). Zenodo. [https://doi.org/10.5281/zenodo.14626038](https://doi.org/10.5281/zenodo.14626038).
+**cite as:** Schniedermann, A., Simons, A. (2025). Analysis of Pandemic Document Types (PanDots). Zenodo. [https://doi.org/10.5281/zenodo.14626038](https://doi.org/10.5281/zenodo.14626038).
 
 # Version history
 

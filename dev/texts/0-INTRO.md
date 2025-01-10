@@ -2,7 +2,11 @@
 **Alexander Schniedermann¹, Arno Simons²**  
 ¹German Centre for Higher Education Research and Science Studies ([DZHW](https://www.dzhw.eu/) )  
 ²Technische Universität Berlin ([TU Berlin](https://www.tu.berlin/))  
-*Contact: schniedermann@dzhw.eu*
+*Contact: schniedermann@dzhw.eu* | [GitHub repo](https://github.com/TheMetrifiedMe/pandots)
+
+**cite as:** Schniedermann, A., Simons, A. (2025). Analysis of Pandemic Document Types (PanDots). Zenodo. [https://doi.org/10.5281/zenodo.14626038](https://doi.org/10.5281/zenodo.14626038).
+
+
 
 # Introduction
 
@@ -18,7 +22,7 @@ Against this background, we ask how the Covid-19 pandemic has impacted on the ge
 Our primary dataset consists of medical publications indexed in PubMed and OpenAlex, each assigned a PubMed identifier (PMID). In early 2024, we retrieved the complete metadata record from PubMed as of its December 2023 version. Since January 2020, marking the onset of the pandemic, this dataset has included 5.82 million unique items that are either Editorials, Letters, News, Case Reports, Randomized Controlled Trials Journal Aricles, Reviews, Cochrane Reviews, or Systematic Reviews. Because PubMed does not index preprint articles and only includes citation links to other PubMed items, we matched the dataset with the February 2024 snapshot of OpenAlex, provided by the German Competence Network Bibliometrics. During the matching there was a 5.7% loss of the original items while 280k preprints were added. The final dataset comprises of 5.76 million items.
 
 
-## Preprints
+**Preprints**
 
 We identified preprints based on their registered source titles in OpenAlex. Unlike the rest of the dataset, only occasionally have a PMID, as they may not be indexed in PubMed. Additionally, preprints outside the medical domain are less comparable to the PubMed set. Therefore, we included in our sample only repositories with at least 15% of their preprints labeled as "Health Sciences" [topics](https://docs.openalex.org/api-entities/topics) in OpenAlex were included in the sample. Note that the full repositories were included, similar to the inclusion of PubMed as a whole. While different strategies were tested, the inclusion of whole repositories provided the best trade-off in favour of keeping most of what is relevant. Applying a topic-based filter on the item level, on the other hand, would have excluded many publications in medicine. For example, publications in radiology are often assigned the topic "physics" but including that topic, most of arXiv records would have been included as well. The covered preprint servers are:
 
@@ -34,7 +38,7 @@ We identified preprints based on their registered source titles in OpenAlex. Unl
 - 'OSF Preprints (OSF Preprints)'
 
 
-## Identification of COVID-19 Related Research
+**Identification of COVID-19 Related Research**
 
 We conducted the identification of COVID-19-related publications in two steps. First, we marked any publication assigned a COVID-19-related MeSH term as relevant to COVID-19 (see [NLM 2021](https://www.nlm.nih.gov/pubs/techbull/nd20/nd20_mesh_covid_terms.html)). However, due to the indexing time lag at NLM and the exclusion of preprints from their indexing, a second step was necessary. We then employed a title and abstract-based search system. Titles and abstracts were screened using the following full-text search query in PostgreSQL:
 
@@ -43,16 +47,16 @@ We conducted the identification of COVID-19-related publications in two steps. F
 When comparing this approach to the MeSH term-based method, we found that the title and abstract screening achieved an overall precision of 0.9330, a recall of 0.9622, and an F1-Score of 0.9474. Therefore, our title and abstract-based screening proved to be a robust classification approach.
 
 
-## Document Types
+**Document Types**
 
 Document type information was provided by PubMed. The PubMed data features a rich set of 79 different document types which are also multi-assigned. To reduce multi-assignment, we ranked each document type and reduced the classification to the highest ranks. Further, we separated the document types according to their intellectual function into four bigger groups, so that analysis and visualization is more accessible. All document types, their ranks and groupings can be found in [documenttypes.csv](./dev/ac24_documenttypes.csv). The four groups are:
 
-1. **Problems:** (Editorials, letters, and news items) Problems are the scholarly content of journals that is not scientific content per se. We assume that editorials and news are used for the problematization of current trends and development, as well as agenda setting. 
-2. **Preprints:** Any document type but without peer review. In this study, all items from the preprint servers listed above are considered as preprints. Preprints are the quickest way to communicate research findings and likely play a big role during the early pandemic.
-3. **Articles:** (Jurnal articles, case reports, clinical trials) Full reportings of peer-reviews research results. Journal articles are the gold standard of scholarly communication.
-4. **Syntheses:** (Systematic reviews, meta-analyses and narrative reviews) Comprehensive summaries of research on specific topics or questions. They represent the scientific consensus or final answer to particular research questions. Syntheses are considered the most reliable evidence base.
+1. *Problems:* (Editorials, letters, and news items) Problems are the scholarly content of journals that is not scientific content per se. We assume that editorials and news are used for the problematization of current trends and development, as well as agenda setting. 
+2. *Preprints:* Any document type but without peer review. In this study, all items from the preprint servers listed above are considered as preprints. Preprints are the quickest way to communicate research findings and likely play a big role during the early pandemic.
+3. *Articles:* (Jurnal articles, case reports, clinical trials) Full reportings of peer-reviews research results. Journal articles are the gold standard of scholarly communication.
+4. *Syntheses:* (Systematic reviews, meta-analyses and narrative reviews) Comprehensive summaries of research on specific topics or questions. They represent the scientific consensus or final answer to particular research questions. Syntheses are considered the most reliable evidence base.
 
-## Citation distributions
+**Citation distributions**
 
 To analyze the dynamics of citation distributions, we used Hogg's measures of skewness and kurtosis for non-normally distributed data ([Bono et al. 2019](https://www.mdpi.com/2073-8994/12/1/19)). Additionally, we calculated the Herfindahl-Hirschman Index (HHI) to assess the concentration of citations within the evidence base of COVID-19-related research. To facilitate comparisons across different months, we report the HHI as a proportion of the maximum possible HHI for each respective month. The maximum HHI represents a hypothetical scenario where a single article would receive all citations made during that month. Unlike other bibliometric analyses that calculate the HHI based on the concentration of citations to individual articles, we conceptualize all citations made in a given month as the "market" or evidence base for research published during that period. This approach follows the methodology outlined by [Lariviére et al. 2009](https://onlinelibrary.wiley.com/doi/abs/10.1002/asi.21011).
 
