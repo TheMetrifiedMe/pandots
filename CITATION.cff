@@ -20,8 +20,15 @@ authors:
     email: arno.simons@tu-berlin.de
     affiliation: Technische Universität Berlin
     orcid: 'https://orcid.org/0000-0003-0657-5254'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.14626038
+  - type: url
+    value: 'https://themetrifiedme.github.io/pandots/'
+    description: Dashboard Homepage
 repository-code: 'https://github.com/TheMetrifiedMe/pandots'
 url: 'https://themetrifiedme.github.io/pandots/'
+repository: 'https://zenodo.org/records/14626039'
 abstract: >-
   Types and genres of scientific literature serve different
   social and epistemic functions within the scholarly
@@ -42,5 +49,5 @@ keywords:
   - pandemic response
   - preprints
 license: CC-BY-4.0
-version: v.1.5.2
-date-released: '2024-12-10'
+version: v.1.5.3
+date-released: '2025-01-10'
